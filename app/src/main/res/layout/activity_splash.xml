@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.splash.SplashActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".view.splash.SplashActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieGameAnimation"
@@ -13,6 +13,6 @@
         android:layout_height="match_parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/game"/>
+        app:lottie_rawRes="@raw/game" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

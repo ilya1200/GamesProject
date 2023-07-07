@@ -8,6 +8,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ContextProvider.setApplicationContext(this);
+        ContextProvider.setApplicationContext(getApplicationContext());
     }
 }

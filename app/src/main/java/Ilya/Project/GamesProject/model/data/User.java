@@ -1,8 +1,8 @@
 package Ilya.Project.GamesProject.model.data;
 
 public class User {
-    private String userName;
-    private String password;
+    private final String userName;
+    private final String password;
 
     public User(String userName, String password) {
         this.userName = userName;

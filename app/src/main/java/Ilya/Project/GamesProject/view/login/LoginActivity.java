@@ -1,8 +1,8 @@
 package Ilya.Project.GamesProject.view.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import Ilya.Project.GamesProject.R;
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GamesProject</string>
+    <string name="request_failed">request failed</string>
+    <string name="error_message_1">login failed</string>
 </resources>

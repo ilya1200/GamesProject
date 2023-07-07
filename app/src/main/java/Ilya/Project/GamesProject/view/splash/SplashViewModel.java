@@ -6,23 +6,22 @@ import androidx.lifecycle.ViewModel;
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.callbacks.LoginCallback;
-import Ilya.Project.GamesProject.utils.managers.UserManager;
 
 public class SplashViewModel extends ViewModel {
 
-    public MutableLiveData<Boolean> loginLiveData;
+    public MutableLiveData<Boolean> loginLiveData = new MutableLiveData<>();
 
     public void handleLogin() {
         User user = UserRepository.getUser();
         if (user == null) {
             loginLiveData.setValue(false);
         } else {
-            loginUser();
+            loginUser(user);
         }
     }
 
-    private void loginUser() {
-        UserRepository.login(new LoginCallback() {
+    private void loginUser(User user) {
+        UserRepository.login(user, new LoginCallback() {
             @Override
             public void onLoginSuccess() {
                 loginLiveData.setValue(true);
@@ -31,6 +30,7 @@ public class SplashViewModel extends ViewModel {
             @Override
             public void onLoginFailure(String errorMessage) {
                 loginLiveData.setValue(false);
+                UserRepository.clearUser();
             }
         });
     }
