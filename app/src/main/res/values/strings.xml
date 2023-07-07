@@ -2,4 +2,11 @@
     <string name="app_name">GamesProject</string>
     <string name="request_failed">request failed</string>
     <string name="error_message_1">login failed</string>
+    <string name="login_header">login</string>
+    <string name="login_user_name_hint">user name</string>
+    <string name="login_password_hint">password</string>
+    <string name="login_do_not_have_user">no user?</string>
+    <string name="login_btn">login</string>
+    <string name="error_username_is_invalid">username should start with a letter, contain only letters and numbers and be 3 to 19 chars long</string>
+    <string name="error_password_is_invalid">Password should be 4 chars long and can contain only letters and number</string>
 </resources>
