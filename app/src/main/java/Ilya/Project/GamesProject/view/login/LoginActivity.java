@@ -15,7 +15,6 @@ import com.google.android.material.textview.MaterialTextView;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.view.gamesList.GamesListActivity;
-import Ilya.Project.GamesProject.view.splash.SplashActivity;
 
 public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
@@ -62,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                loginViewModel.onUserPasswordChanged(s.toString());
+                loginViewModel.onPasswordChanged(s.toString());
             }
 
             @Override
@@ -90,15 +89,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.passwordErrorResId.observe(this, passwordErrorResId -> {
-            if (passwordErrorResId == 0) {
-                // password is valid
+        loginViewModel.passwordValid.observe(this, isPasswordValid -> {
+            if (isPasswordValid) {
                 loginPasswordLayout.setErrorEnabled(false);
                 loginPasswordLayout.setError(null);
             } else{
-                // Make error
                 loginPasswordLayout.setErrorEnabled(true);
-                loginPasswordLayout.setError(getResources().getString(passwordErrorResId));
+                loginPasswordLayout.setError(getResources().getString(R.string.error_password_is_invalid));
+                loginBtn.setEnabled(false);
             }
         });
 

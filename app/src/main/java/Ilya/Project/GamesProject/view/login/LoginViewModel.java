@@ -3,17 +3,18 @@ package Ilya.Project.GamesProject.view.login;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.utils.UserValidator;
-import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 
 public class LoginViewModel extends ViewModel{
 
     public MutableLiveData<Boolean> usernameValid = new MutableLiveData<>();
-    public MutableLiveData<Integer> passwordErrorResId = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> passwordValid = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> shouldEnableLoginBtn = new MutableLiveData<>();
     private boolean isUsernameValid = false;
+    private boolean isPasswordValid = false;
+
     public void onUserNameChanged(String username) {
         if(UserValidator.isUsernameValid(username)){
             isUsernameValid = true;
@@ -25,13 +26,19 @@ public class LoginViewModel extends ViewModel{
         usernameValid.setValue(isUsernameValid);
     }
 
-    public void onUserPasswordChanged(String password) {
-        usernameErrorResId.setValue(validatePassword(password));
-        checkLoginButton();
+    public void onPasswordChanged(String password) {
+        if(UserValidator.isPasswordValid(password)){
+            isPasswordValid = true;
+            checkEnablingLoginButton();
+        }
+        else{
+            isPasswordValid = false;
+        }
+        passwordValid.setValue(isPasswordValid);
     }
 
     private void checkEnablingLoginButton() {
-        shouldEnableLoginBtn.setValue(isUsernameValid && isUserPasswordValid);
+        shouldEnableLoginBtn.setValue(isUsernameValid && isPasswordValid);
     }
 
 
