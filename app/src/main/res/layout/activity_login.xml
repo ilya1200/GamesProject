@@ -9,94 +9,87 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/loginHeader"
-        android:layout_width="match_parent"
+        style="@style/TextAppearance.Material3.DisplayMedium"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="35dp"
+        android:layout_marginTop="35dp"
         android:text="@string/login_header"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loginUserNameLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="80dp"
-        android:hint="@string/login_user_name_hint"
-        android:inputType="text"
-        android:maxLength="30"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="4dp"
-        android:textSize="14sp"
-        app:errorEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginHeader">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginUserName"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginUserNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
+            android:hint="@string/login_user_name_hint"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLength="30"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textSize="14sp"
+            app:errorEnabled="false">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginUserName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loginPasswordLayout"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        android:maxLength="30"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="4dp"
-        android:textSize="14sp"
-        app:errorEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginUserNameLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
+            android:layout_marginTop="24dp"
+            android:hint="@string/login_password_hint"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLength="30"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textSize="14sp"
+            app:errorEnabled="false">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/doNotHaveUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="24dp"
-        android:text="@string/login_do_not_have_user"
-        app:layout_constraintEnd_toEndOf="@+id/loginPasswordLayout"
-        app:layout_constraintTop_toBottomOf="@+id/loginPasswordLayout" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/doNotHaveUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="@string/login_do_not_have_user" />
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="24dp"
-        android:backgroundTint="@android:color/darker_gray"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="60dp"
+        android:enabled="false"
         android:text="@string/login_btn"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doNotHaveUser" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

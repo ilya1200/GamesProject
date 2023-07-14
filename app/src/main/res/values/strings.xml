@@ -9,4 +9,7 @@
     <string name="login_btn">login</string>
     <string name="error_username_is_invalid">username should start with a letter, contain only letters and numbers and be 3 to 19 chars long</string>
     <string name="error_password_is_invalid">Password should be 4 chars long and can contain only letters and number</string>
+    <string name="games_header">games</string>
+    <string name="plus_button_to_create_a_new_game">A plus button to create a new game</string>
+    <string name="games_user">user</string>
 </resources>

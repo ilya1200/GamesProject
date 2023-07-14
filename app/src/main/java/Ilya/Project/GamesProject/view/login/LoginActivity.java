@@ -14,7 +14,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
 import Ilya.Project.GamesProject.R;
+import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.view.gamesList.GamesListActivity;
+import Ilya.Project.GamesProject.view.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
@@ -71,7 +73,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         doNotHaveUser.setOnClickListener(v -> {
-            moveToActivity(new Intent(LoginActivity.this, GamesListActivity.class));
+            moveToActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
+
+        loginBtn.setOnClickListener(v -> {
+            String userName = loginUserNameField.getText().toString();
+            String password = loginPasswordField.getText().toString();
+            loginViewModel.handleLogin(new User(userName, password));
         });
     }
 
@@ -102,6 +110,12 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel.shouldEnableLoginBtn.observe(this, shouldEnableLoginBtn -> {
             loginBtn.setEnabled(shouldEnableLoginBtn);
+        });
+
+        loginViewModel.loginLiveData.observe(this, isLoggedInSuccess -> {
+            if (isLoggedInSuccess) {
+                moveToActivity(new Intent(LoginActivity.this, GamesListActivity.class));
+            }
         });
     }
 
