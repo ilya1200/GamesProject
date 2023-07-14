@@ -20,7 +20,7 @@ import Ilya.Project.GamesProject.view.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
-    private TextInputLayout loginUserNameLayout;
+    private TextInputLayout loginUsernameLayout;
     private TextInputLayout loginPasswordLayout;
     private Button loginBtn;
 
@@ -29,16 +29,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginUserNameLayout = findViewById(R.id.loginUserNameLayout);
+        loginUsernameLayout = findViewById(R.id.loginUsernameLayout);
         loginPasswordLayout = findViewById(R.id.loginPasswordLayout);
-        TextInputEditText loginUserNameField = findViewById(R.id.loginUserName);
+        TextInputEditText loginUsernameField = findViewById(R.id.loginUsername);
         TextInputEditText loginPasswordField = findViewById(R.id.loginPassword);
         MaterialTextView doNotHaveUser = findViewById(R.id.doNotHaveUser);
         loginBtn = findViewById(R.id.loginBtn);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         initObservers();
 
-        loginUserNameField.addTextChangedListener(new TextWatcher() {
+        loginUsernameField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                loginViewModel.onUserNameChanged(s.toString());
+                loginViewModel.onUsernameChanged(s.toString());
             }
 
             @Override
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginBtn.setOnClickListener(v -> {
-            String userName = loginUserNameField.getText().toString();
+            String userName = loginUsernameField.getText().toString();
             String password = loginPasswordField.getText().toString();
             loginViewModel.handleLogin(new User(userName, password));
         });
@@ -88,11 +88,11 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel.usernameValid.observe(this, isUsernameValid -> {
             if (isUsernameValid) {
-                loginUserNameLayout.setErrorEnabled(false);
-                loginUserNameLayout.setError(null);
-            }else{
-                loginUserNameLayout.setErrorEnabled(true);
-                loginUserNameLayout.setError(this.getString(R.string.error_username_is_invalid));
+                loginUsernameLayout.setErrorEnabled(false);
+                loginUsernameLayout.setError(null);
+            } else {
+                loginUsernameLayout.setErrorEnabled(true);
+                loginUsernameLayout.setError(this.getString(R.string.error_username_is_invalid));
                 loginBtn.setEnabled(false);
             }
         });
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             if (isPasswordValid) {
                 loginPasswordLayout.setErrorEnabled(false);
                 loginPasswordLayout.setError(null);
-            } else{
+            } else {
                 loginPasswordLayout.setErrorEnabled(true);
                 loginPasswordLayout.setError(getResources().getString(R.string.error_password_is_invalid));
                 loginBtn.setEnabled(false);

@@ -1,19 +1,32 @@
 package Ilya.Project.GamesProject.model.data;
 
-public class User {
-    private final String userName;
-    private final String password;
+import com.google.gson.annotations.SerializedName;
 
-    public User(String userName, String password) {
-        this.userName = userName;
+public class User {
+
+    @SerializedName("username")
+    private String username;
+    @SerializedName("password")
+    private String password;
+
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

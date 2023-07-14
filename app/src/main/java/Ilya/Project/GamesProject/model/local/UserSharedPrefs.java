@@ -15,11 +15,11 @@ public class UserSharedPrefs {
         return !(username.isEmpty() || password.isEmpty());
     }
 
-    public static String getUserNameLocally() {
+    public static String getUsernameLocally() {
         return sharedPrefs.getString(USERNAME, "");
     }
 
-    public static void setUserNameLocally(String username) {
+    public static void setUsernameLocally(String username) {
         if (username == null || username.isEmpty()) {
             return;
         }
@@ -41,7 +41,7 @@ public class UserSharedPrefs {
         editor.apply();
     }
 
-    public static void clearUserNameLocally() {
+    public static void clearUsernameLocally() {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString(USERNAME, "");
         editor.apply();

@@ -4,6 +4,7 @@ import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.local.UserSharedPrefs;
 import Ilya.Project.GamesProject.model.network.user.UserAPI;
 import Ilya.Project.GamesProject.utils.callbacks.LoginCallback;
+import Ilya.Project.GamesProject.utils.callbacks.RegisterCallback;
 
 public class UserRepository {
 
@@ -11,7 +12,7 @@ public class UserRepository {
         if (!UserSharedPrefs.isUserExistsLocally()) {
             return null;
         }
-        String username = UserSharedPrefs.getUserNameLocally();
+        String username = UserSharedPrefs.getUsernameLocally();
         String password = UserSharedPrefs.getUserPasswordLocally();
         return new User(username, password);
     }
@@ -20,16 +21,20 @@ public class UserRepository {
         if (user == null) {
             return;
         }
-        UserSharedPrefs.setUserNameLocally(user.getUserName());
+        UserSharedPrefs.setUsernameLocally(user.getUsername());
         UserSharedPrefs.setUserPasswordLocally(user.getPassword());
     }
 
     public static void clearUser() {
-        UserSharedPrefs.clearUserNameLocally();
+        UserSharedPrefs.clearUsernameLocally();
         UserSharedPrefs.clearUserPasswordLocally();
     }
 
     public static void login(User user, LoginCallback loginCallback) {
         UserAPI.login(user, loginCallback);
+    }
+
+    public static void register(User user, RegisterCallback registerCallback) {
+        UserAPI.register(user, registerCallback);
     }
 }

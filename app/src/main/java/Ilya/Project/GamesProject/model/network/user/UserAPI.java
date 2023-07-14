@@ -4,6 +4,7 @@ import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.network.retrofit.RetrofitInstance;
 import Ilya.Project.GamesProject.utils.callbacks.LoginCallback;
+import Ilya.Project.GamesProject.utils.callbacks.RegisterCallback;
 import Ilya.Project.GamesProject.utils.handlers.ErrorMessageHandler;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 import retrofit2.Call;
@@ -13,7 +14,7 @@ import retrofit2.Response;
 public class UserAPI {
 
     public static void login(User user, LoginCallback loginCallback) {
-        Call<Void> callable = RetrofitInstance.getUserService().login(user.getUserName(), user.getPassword());
+        Call<Void> callable = RetrofitInstance.getUserService().login(user.getUsername(), user.getPassword());
 
         callable.enqueue(new Callback<Void>() {
             @Override
@@ -30,6 +31,28 @@ public class UserAPI {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 loginCallback.onLoginFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_1));
+            }
+        });
+    }
+
+    public static void register(User user, RegisterCallback registerCallback) {
+        Call<Void> callable = RetrofitInstance.getUserService().signUp(user);
+
+        callable.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int code = response.code();
+                if (200 <= code && code < 300) {
+                    registerCallback.onRegisterSuccess();
+                } else {
+                    String message = ErrorMessageHandler.getErrorMessageFromResponse(response);
+                    registerCallback.onRegisterFailure(message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                registerCallback.onRegisterFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_2));
             }
         });
     }

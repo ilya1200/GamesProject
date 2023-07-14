@@ -1,4 +1,4 @@
-package Ilya.Project.GamesProject.view.login;
+package Ilya.Project.GamesProject.view.register;
 
 import android.widget.Toast;
 
@@ -8,22 +8,22 @@ import androidx.lifecycle.ViewModel;
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.UserValidator;
-import Ilya.Project.GamesProject.utils.callbacks.LoginCallback;
+import Ilya.Project.GamesProject.utils.callbacks.RegisterCallback;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 
-public class LoginViewModel extends ViewModel {
-
+public class RegisterViewModel extends ViewModel {
     public MutableLiveData<Boolean> usernameValid = new MutableLiveData<>();
     public MutableLiveData<Boolean> passwordValid = new MutableLiveData<>();
-    public MutableLiveData<Boolean> shouldEnableLoginBtn = new MutableLiveData<>();
-    public MutableLiveData<Boolean> loginLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> shouldEnableRegisterBtn = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> registerLiveData = new MutableLiveData<>();
     private boolean isUsernameValid = false;
     private boolean isPasswordValid = false;
 
     public void onUsernameChanged(String username) {
         if (UserValidator.isUsernameValid(username)) {
             isUsernameValid = true;
-            checkEnablingLoginButton();
+            checkEnablingRegisterButton();
         } else {
             isUsernameValid = false;
         }
@@ -33,37 +33,36 @@ public class LoginViewModel extends ViewModel {
     public void onPasswordChanged(String password) {
         if (UserValidator.isPasswordValid(password)) {
             isPasswordValid = true;
-            checkEnablingLoginButton();
+            checkEnablingRegisterButton();
         } else {
             isPasswordValid = false;
         }
         passwordValid.setValue(isPasswordValid);
     }
 
-    private void checkEnablingLoginButton() {
-        shouldEnableLoginBtn.setValue(isUsernameValid && isPasswordValid);
+    private void checkEnablingRegisterButton() {
+        shouldEnableRegisterBtn.setValue(isUsernameValid && isPasswordValid);
     }
 
-
-    public void handleLogin(User user) {
+    public void handleRegister(User user) {
         if (user == null) {
-            loginLiveData.setValue(false);
+            registerLiveData.setValue(false);
         } else {
-            loginUser(user);
+            registerUser(user);
         }
     }
 
-    private void loginUser(User user) {
-        UserRepository.login(user, new LoginCallback() {
+    private void registerUser(User user) {
+        UserRepository.register(user, new RegisterCallback() {
             @Override
-            public void onLoginSuccess() {
-                loginLiveData.setValue(true);
+            public void onRegisterSuccess() {
+                registerLiveData.setValue(true);
                 UserRepository.setUser(user);
             }
 
             @Override
-            public void onLoginFailure(String errorMessage) {
-                loginLiveData.setValue(false);
+            public void onRegisterFailure(String errorMessage) {
+                registerLiveData.setValue(false);
                 UserRepository.clearUser();
                 Toast.makeText(ContextProvider.getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
             }

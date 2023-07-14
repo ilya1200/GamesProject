@@ -2,6 +2,7 @@
     <string name="app_name">GamesProject</string>
     <string name="request_failed">request failed</string>
     <string name="error_message_1">login failed</string>
+    <string name="error_message_2">failed to register</string>
     <string name="login_header">login</string>
     <string name="login_user_name_hint">user name</string>
     <string name="login_password_hint">password</string>
@@ -12,4 +13,9 @@
     <string name="games_header">games</string>
     <string name="plus_button_to_create_a_new_game">A plus button to create a new game</string>
     <string name="games_user">user</string>
+    <string name="register_header">register</string>
+    <string name="register_user_name_hint">user name</string>
+    <string name="register_password_hint">password</string>
+    <string name="register_already_have_user_link">Already have a user?</string>
+    <string name="register_btn">register</string>
 </resources>

@@ -14,7 +14,7 @@ import Ilya.Project.GamesProject.view.login.LoginActivity;
 
 public class GamesListActivity extends AppCompatActivity {
     GamesListViewModel gamesListViewModel;
-    private MaterialTextView gamesUserName;
+    private MaterialTextView gamesUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +22,11 @@ public class GamesListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_games_list);
 
         MaterialButton logOutBtn = findViewById(R.id.logOutBtn);
-        gamesUserName = findViewById(R.id.games_user);
+        gamesUsername = findViewById(R.id.games_user);
 
         gamesListViewModel = new ViewModelProvider(this).get(GamesListViewModel.class);
         initObservers();
-        gamesListViewModel.displayUserName();
+        gamesListViewModel.displayUsername();
 
 
         logOutBtn.setOnClickListener(v -> {
@@ -38,7 +38,7 @@ public class GamesListActivity extends AppCompatActivity {
 
     private void initObservers() {
         gamesListViewModel.username.observe(this, username -> {
-            gamesUserName.setText(username);
+            gamesUsername.setText(username);
         });
     }
 

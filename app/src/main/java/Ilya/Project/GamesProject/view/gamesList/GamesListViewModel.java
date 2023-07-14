@@ -10,9 +10,9 @@ public class GamesListViewModel extends ViewModel {
     public MutableLiveData<String> username = new MutableLiveData<>();
 
 
-    public void displayUserName(){
+    public void displayUsername() {
         User user = UserRepository.getUser();
-        username.setValue(user!=null? user.getUserName(): "");
+        username.setValue(user != null ? user.getUsername() : "");
     }
 
     public void handleLogOut() {
