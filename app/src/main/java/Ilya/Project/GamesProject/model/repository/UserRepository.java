@@ -3,8 +3,7 @@ package Ilya.Project.GamesProject.model.repository;
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.local.UserSharedPrefs;
 import Ilya.Project.GamesProject.model.network.user.UserAPI;
-import Ilya.Project.GamesProject.utils.callbacks.LoginCallback;
-import Ilya.Project.GamesProject.utils.callbacks.RegisterCallback;
+import Ilya.Project.GamesProject.utils.Result;
 
 public class UserRepository {
 
@@ -30,11 +29,11 @@ public class UserRepository {
         UserSharedPrefs.clearUserPasswordLocally();
     }
 
-    public static void login(User user, LoginCallback loginCallback) {
+    public static void login(User user, Result loginCallback) {
         UserAPI.login(user, loginCallback);
     }
 
-    public static void register(User user, RegisterCallback registerCallback) {
+    public static void register(User user, Result registerCallback) {
         UserAPI.register(user, registerCallback);
     }
 }

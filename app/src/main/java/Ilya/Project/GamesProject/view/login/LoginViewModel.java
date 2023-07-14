@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel;
 
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
+import Ilya.Project.GamesProject.utils.Result;
 import Ilya.Project.GamesProject.utils.UserValidator;
-import Ilya.Project.GamesProject.utils.callbacks.LoginCallback;
+
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 
 public class LoginViewModel extends ViewModel {
@@ -54,15 +55,15 @@ public class LoginViewModel extends ViewModel {
     }
 
     private void loginUser(User user) {
-        UserRepository.login(user, new LoginCallback() {
+        UserRepository.login(user, new Result() {
             @Override
-            public void onLoginSuccess() {
+            public void onSuccess() {
                 loginLiveData.setValue(true);
                 UserRepository.setUser(user);
             }
 
             @Override
-            public void onLoginFailure(String errorMessage) {
+            public void onFailure(String errorMessage) {
                 loginLiveData.setValue(false);
                 UserRepository.clearUser();
                 Toast.makeText(ContextProvider.getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();

@@ -3,6 +3,7 @@
     <string name="request_failed">request failed</string>
     <string name="error_message_1">login failed</string>
     <string name="error_message_2">failed to register</string>
+    <string name="error_message_3">failed to join game</string>
     <string name="login_header">login</string>
     <string name="login_user_name_hint">user name</string>
     <string name="login_password_hint">password</string>

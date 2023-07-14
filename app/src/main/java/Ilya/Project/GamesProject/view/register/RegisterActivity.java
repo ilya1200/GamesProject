@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +16,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
+import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 import Ilya.Project.GamesProject.view.gamesList.GamesListActivity;
 import Ilya.Project.GamesProject.view.login.LoginActivity;
 
@@ -115,6 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
             if (isLoggedInSuccess) {
                 moveToActivity(new Intent(RegisterActivity.this, GamesListActivity.class));
             }
+        });
+        registerViewModel.showErrorMessageToastLiveData.observe(this, errorMessage->{
+            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
         });
     }
 
