@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.rest.ErrorMessage;
+import Ilya.Project.GamesProject.utils.ErrorMessage;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 import okhttp3.ResponseBody;
 import retrofit2.Response;

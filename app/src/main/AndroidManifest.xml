@@ -26,7 +26,7 @@
             android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.gamesList.GamesListActivity"
+            android:name=".view.gameList.GameListActivity"
             android:exported="false" />
         <activity
             android:name=".view.splash.SplashActivity"

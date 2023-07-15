@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.view.gamesList.GamesListActivity;
+import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 import Ilya.Project.GamesProject.view.login.LoginActivity;
 
 @SuppressLint("CustomSplashScreen")
@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     private void initObservers() {
         splashViewModel.loginLiveData.observe(this, isLoggedInSuccess -> {
             if (isLoggedInSuccess) {
-                moveToActivity(new Intent(SplashActivity.this, GamesListActivity.class));
+                moveToActivity(new Intent(SplashActivity.this, GameListActivity.class));
             } else {
                 moveToActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }

@@ -1,6 +1,9 @@
-package Ilya.Project.GamesProject.view.gamesList;
+package Ilya.Project.GamesProject.view.gameList;
+
+import static Ilya.Project.GamesProject.utils.Constants.GAMES;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.rest.GameResponse;
+import Ilya.Project.GamesProject.model.data.game.Game;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
-    private final List<GameResponse> games;
+    private final List<Game> games;
     private final Context context;
     private final GameItemClickListener gameItemClickListener;
 
 
-    public GamesAdapter(List<GameResponse> games, Context context, GameItemClickListener gameItemClickListener) {
+    public GamesAdapter(List<Game> games, Context context, GameItemClickListener gameItemClickListener) {
         this.games = games;
         this.context = context;
         this.gameItemClickListener = gameItemClickListener;
@@ -36,12 +39,13 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        GameResponse gameResponse = games.get(holder.getAdapterPosition());
-        holder.textViewGameId.setText(gameResponse.getId().toString());
-        holder.textViewGameType.setText(gameResponse.getType());
-        holder.textViewUserName.setText(gameResponse.getUserFirstName());
-        holder.textViewCreationDate.setText(String.valueOf(gameResponse.getCreationDate()));
-        holder.itemGameParent.setOnClickListener(v -> gameItemClickListener.onItemClicked(gameResponse));
+        Log.d(GAMES, String.format("onBindViewHolder was called, position: %d and viewHolder %s", position, holder.toString()));
+        Game game = games.get(holder.getAdapterPosition());
+        holder.textViewGameId.setText(game.getId().toString());
+        holder.textViewGameType.setText(game.getType());
+        holder.textViewUserName.setText(game.getUserFirstName());
+        holder.textViewCreationDate.setText(String.valueOf(game.getCreationDate()));
+        holder.itemGameParent.setOnClickListener(v -> gameItemClickListener.onItemClicked(game));
     }
 
 

@@ -1,11 +1,11 @@
-package Ilya.Project.GamesProject.model.rest;
+package Ilya.Project.GamesProject.model.data.game;
 
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.model.data.game.GameStatus;
 import Ilya.Project.GamesProject.model.data.game.Move;
 
-public class GameResponse {
+public class Game {
     private UUID id;
     private String type;
 

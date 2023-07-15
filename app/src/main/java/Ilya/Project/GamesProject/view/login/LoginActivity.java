@@ -15,7 +15,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
-import Ilya.Project.GamesProject.view.gamesList.GamesListActivity;
+import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 import Ilya.Project.GamesProject.view.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel.loginLiveData.observe(this, isLoggedInSuccess -> {
             if (isLoggedInSuccess) {
-                moveToActivity(new Intent(LoginActivity.this, GamesListActivity.class));
+                moveToActivity(new Intent(LoginActivity.this, GameListActivity.class));
             }
         });
     }

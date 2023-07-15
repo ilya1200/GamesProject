@@ -1,4 +1,4 @@
-package Ilya.Project.GamesProject.model.rest;
+package Ilya.Project.GamesProject.utils;
 
 public class ErrorMessage {
     private String field;

@@ -16,8 +16,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
-import Ilya.Project.GamesProject.utils.providers.ContextProvider;
-import Ilya.Project.GamesProject.view.gamesList.GamesListActivity;
+import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 import Ilya.Project.GamesProject.view.login.LoginActivity;
 
 
@@ -109,18 +108,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        registerViewModel.shouldEnableRegisterBtn.observe(this, shouldEnableRegisterBtn -> {
-            registerBtn.setEnabled(shouldEnableRegisterBtn);
-        });
+        registerViewModel.shouldEnableRegisterBtn.observe(this, shouldEnableRegisterBtn -> registerBtn.setEnabled(shouldEnableRegisterBtn));
 
         registerViewModel.registerLiveData.observe(this, isLoggedInSuccess -> {
             if (isLoggedInSuccess) {
-                moveToActivity(new Intent(RegisterActivity.this, GamesListActivity.class));
+                moveToActivity(new Intent(RegisterActivity.this, GameListActivity.class));
             }
         });
-        registerViewModel.showErrorMessageToastLiveData.observe(this, errorMessage->{
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-        });
+        registerViewModel.showErrorMessageToastLiveData.observe(this, errorMessage-> Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show());
     }
 
     private void moveToActivity(Intent intent) {

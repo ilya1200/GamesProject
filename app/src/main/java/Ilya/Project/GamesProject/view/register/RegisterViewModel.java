@@ -12,7 +12,6 @@ public class RegisterViewModel extends ViewModel {
     public MutableLiveData<Boolean> usernameValid = new MutableLiveData<>();
     public MutableLiveData<Boolean> passwordValid = new MutableLiveData<>();
     public MutableLiveData<Boolean> shouldEnableRegisterBtn = new MutableLiveData<>();
-
     public MutableLiveData<Boolean> registerLiveData = new MutableLiveData<>();
     public MutableLiveData<String> showErrorMessageToastLiveData = new MutableLiveData<>();
     private boolean isUsernameValid = false;
