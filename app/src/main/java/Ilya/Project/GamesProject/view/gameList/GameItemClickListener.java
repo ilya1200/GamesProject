@@ -1,7 +1,7 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import Ilya.Project.GamesProject.model.data.game.Game;
+import java.util.UUID;
 
 public interface GameItemClickListener {
-    void onItemClicked(Game game);
+    void onItemClicked(UUID gameId);
 }

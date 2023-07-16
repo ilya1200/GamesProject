@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.game.GamePatchAction;
 import Ilya.Project.GamesProject.model.data.User;
+import Ilya.Project.GamesProject.model.data.game.Game;
+import Ilya.Project.GamesProject.model.data.game.GameItem;
+import Ilya.Project.GamesProject.model.data.game.GamePatchAction;
+import Ilya.Project.GamesProject.model.data.game.GameRequest;
+import Ilya.Project.GamesProject.model.data.game.GameType;
 import Ilya.Project.GamesProject.model.network.retrofit.RetrofitInstance;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
-import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.utils.DataResult;
 import Ilya.Project.GamesProject.utils.Result;
-import Ilya.Project.GamesProject.utils.handlers.ErrorMessageHandler;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,8 +21,7 @@ import retrofit2.Response;
 
 public class GameAPI {
 
-    public static void joinGame(Game game, Result joinGameCallback) {
-        UUID gameId = game.getId();
+    public static void joinGame(UUID gameId, Result joinGameCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
             joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
@@ -38,8 +39,7 @@ public class GameAPI {
                 if (200 <= code && code < 300) {
                     joinGameCallback.onSuccess();
                 } else {
-                    String message = ErrorMessageHandler.getErrorMessageFromResponse(response);
-                    joinGameCallback.onFailure(message);
+                    joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
                 }
             }
 
@@ -50,29 +50,56 @@ public class GameAPI {
         });
     }
 
-    public static void getGameList(DataResult<List<Game>> getGameListCallback) {
+    public static void getGameList(DataResult<List<GameItem>> getGameListCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
-            getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+            getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_4));
             return;
         }
         String username = user.getUsername();
-        Call<List<Game>> callable = RetrofitInstance.getGameService().getJoinableGames(username);
-        callable.enqueue(new Callback<List<Game>>() {
+        Call<List<GameItem>> callable = RetrofitInstance.getGameService().getJoinableGames(username);
+        callable.enqueue(new Callback<List<GameItem>>() {
             @Override
-            public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
+            public void onResponse(Call<List<GameItem>> call, Response<List<GameItem>> response) {
                 int code = response.code();
                 if (200 <= code && code < 300) {
                     getGameListCallback.onSuccess(response.body());
                 } else {
-                    String message = ErrorMessageHandler.getErrorMessageFromResponse(response);
-                    getGameListCallback.onFailure(message);
+                    getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Game>> call, Throwable t) {
+            public void onFailure(Call<List<GameItem>> call, Throwable t) {
                 getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+            }
+        });
+    }
+
+    public static void createGame(GameType gameType, DataResult<Game> createGameCallback) {
+        User user = UserRepository.getUser();
+        if (user == null) {
+            createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_5));
+            return;
+        }
+        String username = user.getUsername();
+        GameRequest gameRequest = new GameRequest(gameType.toString());
+        Call<Game> callable = RetrofitInstance.getGameService().createGame(gameRequest, username);
+
+        callable.enqueue(new Callback<Game>() {
+            @Override
+            public void onResponse(Call<Game> call, Response<Game> response) {
+                int code = response.code();
+                if (200 <= code && code < 300) {
+                    createGameCallback.onSuccess(response.body());
+                } else {
+                    createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_5));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Game> call, Throwable t) {
+                createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_5));
             }
         });
     }

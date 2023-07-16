@@ -4,7 +4,6 @@ import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.network.retrofit.RetrofitInstance;
 import Ilya.Project.GamesProject.utils.Result;
-import Ilya.Project.GamesProject.utils.handlers.ErrorMessageHandler;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,14 +21,13 @@ public class UserAPI {
                 if (200 <= code && code < 300) {
                     loginCallback.onSuccess();
                 } else {
-                    String message = ErrorMessageHandler.getErrorMessageFromResponse(response);
-                    loginCallback.onFailure(message);
+                    loginCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_login_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                loginCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_1));
+                loginCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_login_failed));
             }
         });
     }
@@ -44,14 +42,13 @@ public class UserAPI {
                 if (200 <= code && code < 300) {
                     registerCallback.onSuccess();
                 } else {
-                    String message = ErrorMessageHandler.getErrorMessageFromResponse(response);
-                    registerCallback.onFailure(message);
+                    registerCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_register_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                registerCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_2));
+                registerCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_register_failed));
             }
         });
     }

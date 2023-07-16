@@ -17,14 +17,15 @@ import java.util.List;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.game.Game;
+import Ilya.Project.GamesProject.model.data.game.GameItem;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
-    private final List<Game> games;
+    private final List<GameItem> games;
     private final Context context;
     private final GameItemClickListener gameItemClickListener;
 
 
-    public GamesAdapter(List<Game> games, Context context, GameItemClickListener gameItemClickListener) {
+    public GamesAdapter(List<GameItem> games, Context context, GameItemClickListener gameItemClickListener) {
         this.games = games;
         this.context = context;
         this.gameItemClickListener = gameItemClickListener;
@@ -40,12 +41,10 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(GAMES, String.format("onBindViewHolder was called, position: %d and viewHolder %s", position, holder.toString()));
-        Game game = games.get(holder.getAdapterPosition());
-        holder.textViewGameId.setText(game.getId().toString());
-        holder.textViewGameType.setText(game.getType());
-        holder.textViewUserName.setText(game.getUserFirstName());
-        holder.textViewCreationDate.setText(String.valueOf(game.getCreationDate()));
-        holder.itemGameParent.setOnClickListener(v -> gameItemClickListener.onItemClicked(game));
+        GameItem game = games.get(holder.getAdapterPosition());
+        holder.textViewGameType.setText(game.getGameType().toString().replace('_',' '));
+        holder.textViewUserName.setText(game.getFirstUser());
+        holder.itemGameParent.setOnClickListener(v -> gameItemClickListener.onItemClicked(game.getGameId()));
     }
 
 
@@ -55,18 +54,14 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewGameId;
         public TextView textViewGameType;
         public TextView textViewUserName;
-        public TextView textViewCreationDate;
         public LinearLayout itemGameParent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewGameId = itemView.findViewById(R.id.textViewGameId);
             textViewGameType = itemView.findViewById(R.id.textViewGameType);
             textViewUserName = itemView.findViewById(R.id.textViewUsername);
-            textViewCreationDate = itemView.findViewById(R.id.textViewCreationDate);
             itemGameParent = itemView.findViewById(R.id.itemGameParent);
         }
     }

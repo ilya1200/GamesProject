@@ -12,5 +12,6 @@ public class TicTacToeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe);
+        //todo join game by id and username
     }
 }

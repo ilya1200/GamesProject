@@ -23,6 +23,7 @@ import java.util.List;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.game.Game;
+import Ilya.Project.GamesProject.model.data.game.GameItem;
 import Ilya.Project.GamesProject.utils.Constants;
 import Ilya.Project.GamesProject.view.TicTacToe.TicTacToeActivity;
 import Ilya.Project.GamesProject.view.login.LoginActivity;
@@ -36,9 +37,9 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
 
     private FloatingActionButton createGameFAB;
 
-    private final GameItemClickListener gameItemClickListener = (gameResponse) -> gameListViewModel.handleGameClick(gameResponse);
+    private final GameItemClickListener gameItemClickListener = (gameId) -> gameListViewModel.handleGameClick(gameId);
 
-    private List<Game> games = new ArrayList<>();
+    private List<GameItem> games = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,9 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
             moveToActivity(new Intent(GameListActivity.this, LoginActivity.class));
         });
 
+        createGameFAB.setOnClickListener(v -> {
+            gameListViewModel.handleCreateGame();
+        });
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -79,16 +83,24 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
             gamesAdapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });
-        gameListViewModel.joinGameSuccess.observe(this, joinGameSuccess -> {
-            if (joinGameSuccess) {
+        gameListViewModel.joinGameSuccess.observe(this, gameId -> {
+            if (gameId != null) {
                 Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
-                intent.putExtra(Constants.EXTRA_IS_GAME_CREATE, false);
+                intent.putExtra(Constants.GAME_ID, gameId);
                 moveToActivity(intent);
             }
         });
         gameListViewModel.showErrorMessageToastLiveData.observe(this, errorMessage -> {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
+        });
+
+        gameListViewModel.createGameSuccess.observe(this, gameId -> {
+            if(gameId != null) {
+                Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
+                intent.putExtra(Constants.GAME_ID, gameId);
+                moveToActivity(intent);
+            }
         });
     }
 
