@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.game.Game;
-import Ilya.Project.GamesProject.model.data.game.GameItem;
+import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 import Ilya.Project.GamesProject.utils.Constants;
 import Ilya.Project.GamesProject.view.TicTacToe.TicTacToeActivity;
 import Ilya.Project.GamesProject.view.login.LoginActivity;
@@ -86,7 +85,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         gameListViewModel.joinGameSuccess.observe(this, gameId -> {
             if (gameId != null) {
                 Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
-                intent.putExtra(Constants.GAME_ID, gameId);
+                intent.putExtra(Constants.GAME_ID, gameId.toString());
                 moveToActivity(intent);
             }
         });
@@ -98,7 +97,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         gameListViewModel.createGameSuccess.observe(this, gameId -> {
             if(gameId != null) {
                 Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
-                intent.putExtra(Constants.GAME_ID, gameId);
+                intent.putExtra(Constants.GAME_ID, gameId.toString());
                 moveToActivity(intent);
             }
         });

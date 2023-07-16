@@ -22,4 +22,6 @@
     <string name="register_password_hint">password</string>
     <string name="register_already_have_user_link">Already have a user?</string>
     <string name="register_btn">register</string>
+    <string name="internal_error">Internal Error</string>
+    <string name="failed_to_get_game_updates">Failed to get game updates</string>
 </resources>

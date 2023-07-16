@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.model.data.User;
-import Ilya.Project.GamesProject.model.data.game.GameItem;
-import Ilya.Project.GamesProject.model.data.game.GameType;
-import Ilya.Project.GamesProject.model.repository.GameRepository;
+import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
+import Ilya.Project.GamesProject.model.data.gameItem.GameType;
+import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.utils.DataResult;
@@ -35,7 +35,7 @@ public class GameListViewModel extends ViewModel {
     }
 
     public void handleGameClick(UUID gameId){
-        GameRepository.joinGame(gameId, new Result(){
+        GameItemRepository.joinGame(gameId, new Result(){
 
             @Override
             public void onSuccess() {
@@ -54,7 +54,7 @@ public class GameListViewModel extends ViewModel {
 
     public void handleGetGameList() {
         Log.d(GAMES, "handleGetGameList was called");
-        GameRepository.getGameList(new DataResult<List<GameItem>>() {
+        GameItemRepository.getGameList(new DataResult<List<GameItem>>() {
             @Override
             public void onSuccess(List<GameItem> gameList) {
                 Log.d(GAMES, "handleGetGameList onSuccess: "+ gameList.size());
@@ -69,7 +69,7 @@ public class GameListViewModel extends ViewModel {
     }
 
     public void handleCreateGame() {
-        GameRepository.createGame(GameType.TIK_TAC_TOE, new DataResult<Game>(){
+        GameItemRepository.createGame(GameType.TIK_TAC_TOE, new DataResult<Game>(){
 
             @Override
             public void onSuccess(Game game) {

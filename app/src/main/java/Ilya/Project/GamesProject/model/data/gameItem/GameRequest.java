@@ -1,4 +1,4 @@
-package Ilya.Project.GamesProject.model.data.game;
+package Ilya.Project.GamesProject.model.data.gameItem;
 
 import com.google.gson.annotations.SerializedName;
 

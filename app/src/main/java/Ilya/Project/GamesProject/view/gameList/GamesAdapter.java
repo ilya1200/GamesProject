@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.game.Game;
-import Ilya.Project.GamesProject.model.data.game.GameItem;
+import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
     private final List<GameItem> games;
