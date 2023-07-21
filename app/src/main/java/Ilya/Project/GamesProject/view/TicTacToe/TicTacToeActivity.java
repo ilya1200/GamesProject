@@ -43,6 +43,7 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
 
         gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID));
         initLayout();
+        ticTacToeViewModel.handleGetGameUpdates(gameId);
     }
 
     private void initObservers() {

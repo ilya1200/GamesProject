@@ -19,7 +19,7 @@ public class TicTacToeViewModel extends ViewModel {
 
             @Override
             public void onSuccess(Game game) {
-
+                gameUpdates.setValue(game);
             }
 
             @Override
