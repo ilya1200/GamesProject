@@ -3,10 +3,9 @@
     <string name="request_failed">request failed</string>
     <string name="error_login_failed">login failed</string>
     <string name="error_register_failed">failed to register</string>
-    <string name="error_message_3">failed to join game</string>
-    <string name="error_message_4">failed to get list of games</string>
-    <string name="error_message_5">failed to create a game</string>
-    //todo: change error names
+    <string name="error_failed_to_join_game">failed to join game</string>
+    <string name="error_failed_to_get_list_of_game">failed to get list of games</string>
+    <string name="error_failed_to_create_game">failed to create a game</string>
     <string name="login_header">login</string>
     <string name="login_user_name_hint">user name</string>
     <string name="login_password_hint">password</string>

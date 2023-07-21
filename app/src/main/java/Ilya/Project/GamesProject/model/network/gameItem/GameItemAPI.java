@@ -24,7 +24,7 @@ public class GameItemAPI {
     public static void joinGame(UUID gameId, Result joinGameCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
-            joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+            joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_join_game));
             return;
         }
         String username = user.getUsername();
@@ -39,13 +39,13 @@ public class GameItemAPI {
                 if (200 <= code && code < 300) {
                     joinGameCallback.onSuccess();
                 } else {
-                    joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+                    joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_join_game));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+                joinGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_join_game));
             }
         });
     }
@@ -53,7 +53,7 @@ public class GameItemAPI {
     public static void getGameList(DataResult<List<GameItem>> getGameListCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
-            getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_4));
+            getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_get_list_of_game));
             return;
         }
         String username = user.getUsername();
@@ -65,13 +65,13 @@ public class GameItemAPI {
                 if (200 <= code && code < 300) {
                     getGameListCallback.onSuccess(response.body());
                 } else {
-                    getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+                    getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_join_game));
                 }
             }
 
             @Override
             public void onFailure(Call<List<GameItem>> call, Throwable t) {
-                getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_3));
+                getGameListCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_join_game));
             }
         });
     }
@@ -79,7 +79,7 @@ public class GameItemAPI {
     public static void createGame(GameType gameType, DataResult<Game> createGameCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
-            createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_5));
+            createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_create_game));
             return;
         }
         String username = user.getUsername();
@@ -93,13 +93,13 @@ public class GameItemAPI {
                 if (200 <= code && code < 300) {
                     createGameCallback.onSuccess(response.body());
                 } else {
-                    createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_5));
+                    createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_create_game));
                 }
             }
 
             @Override
             public void onFailure(Call<Game> call, Throwable t) {
-                createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_message_5));
+                createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_create_game));
             }
         });
     }
