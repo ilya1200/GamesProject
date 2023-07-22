@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Game {
     private UUID id;
-    private String type;
+    private GameType type;
 
     private GameStatus gameStatus;
     private String userFirstName;
@@ -18,7 +18,7 @@ public class Game {
         return id;
     }
 
-    public String getType() {return type;}
+    public GameType getType() {return type;}
 
     public GameStatus getGameStatus() {
         return gameStatus;
