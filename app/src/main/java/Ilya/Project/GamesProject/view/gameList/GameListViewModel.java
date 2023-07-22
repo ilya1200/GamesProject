@@ -15,7 +15,6 @@ import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 import Ilya.Project.GamesProject.model.data.gameItem.GameType;
 import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
-import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.utils.DataResult;
 import Ilya.Project.GamesProject.utils.Result;
 
@@ -69,11 +68,11 @@ public class GameListViewModel extends ViewModel {
     }
 
     public void handleCreateGame() {
-        GameItemRepository.createGame(GameType.TIK_TAC_TOE, new DataResult<Game>(){
+        GameItemRepository.createGame(GameType.TIK_TAC_TOE, new DataResult<UUID>(){
 
             @Override
-            public void onSuccess(Game game) {
-                createGameSuccess.setValue(game.getId());
+            public void onSuccess(UUID gameId) {
+                createGameSuccess.setValue(gameId);
             }
 
             @Override
