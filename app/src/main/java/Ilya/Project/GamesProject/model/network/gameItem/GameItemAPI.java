@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
-import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 import Ilya.Project.GamesProject.model.data.gameItem.GamePatchAction;
 import Ilya.Project.GamesProject.model.data.gameItem.GameRequest;
@@ -76,7 +75,7 @@ public class GameItemAPI {
         });
     }
 
-    public static void createGame(GameType gameType, DataResult<Game> createGameCallback) {
+    public static void createGame(GameType gameType, DataResult<UUID> createGameCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
             createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_create_game));
@@ -84,21 +83,22 @@ public class GameItemAPI {
         }
         String username = user.getUsername();
         GameRequest gameRequest = new GameRequest(gameType.toString());
-        Call<Game> callable = RetrofitInstance.getGameItemService().createGame(gameRequest, username);
+        Call<GameItem> callable = RetrofitInstance.getGameItemService().createGame(gameRequest, username);
 
-        callable.enqueue(new Callback<Game>() {
+        callable.enqueue(new Callback<GameItem>() {
             @Override
-            public void onResponse(Call<Game> call, Response<Game> response) {
+            public void onResponse(Call<GameItem> call, Response<GameItem> response) {
                 int code = response.code();
-                if (200 <= code && code < 300) {
-                    createGameCallback.onSuccess(response.body());
+                GameItem game = response.body();
+                if (200 <= code && code < 300 && game != null) {
+                    createGameCallback.onSuccess(game.getGameId());
                 } else {
                     createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_create_game));
                 }
             }
 
             @Override
-            public void onFailure(Call<Game> call, Throwable t) {
+            public void onFailure(Call<GameItem> call, Throwable t) {
                 createGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_create_game));
             }
         });

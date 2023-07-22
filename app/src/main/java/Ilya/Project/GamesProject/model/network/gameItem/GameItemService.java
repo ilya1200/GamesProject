@@ -17,12 +17,12 @@ import retrofit2.http.Query;
 
 public interface GameItemService {
 
-    @GET("games")
+    @GET("game_item")
     Call<List<GameItem>> getJoinableGames(@Query("username") String username);
 
-    @PATCH("games/{gameId}")
+    @PATCH("game_item/{gameId}")
     Call<Void> changeGame(@Path("gameId") UUID gameId, @Query("username") String username, @Query("password") String password, @Query("action") GamePatchAction action);
 
-    @POST("games")
-    Call<Game> createGame(@Body GameRequest gameRequest, @Query("username") String username);
+    @POST("game_item")
+    Call<GameItem> createGame(@Body GameRequest gameRequest, @Query("username") String username);
 }
