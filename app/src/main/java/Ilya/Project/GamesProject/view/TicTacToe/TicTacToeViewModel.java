@@ -1,10 +1,7 @@
 package Ilya.Project.GamesProject.view.TicTacToe;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import java.util.UUID;
-
 import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.repository.GameRepository;
 import Ilya.Project.GamesProject.utils.DataResult;
