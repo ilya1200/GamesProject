@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface GameService {
     @POST("games/{gameId}/board")
-    Call<Void> makeMove(@Path("gameId") UUID gameId, @Query("username") String username, @Body MoveRequest moveRequest);
+    Call<Game> makeMove(@Path("gameId") UUID gameId, @Query("username") String username, @Body MoveRequest moveRequest);
 
     @GET("games/{gameId}")
     Call<Game> getGameUpdates(@Path("gameId") UUID gameId, @Query("username") String username);
