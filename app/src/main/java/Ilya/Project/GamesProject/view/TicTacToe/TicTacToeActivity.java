@@ -49,6 +49,11 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         quitGameBtn.setOnClickListener(v -> showQuitConfirmationDialog());
     }
 
+    @Override
+    public void onBackPressed() {
+        showQuitConfirmationDialog();
+    }
+
     private void initObservers() {
         ticTacToeViewModel.showErrorMessageToastLiveData.observe(this, errorMessage -> Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show());
         ticTacToeViewModel.gameUpdates.observe(this, game -> {

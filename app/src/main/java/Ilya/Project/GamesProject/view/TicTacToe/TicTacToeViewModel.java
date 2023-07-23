@@ -17,6 +17,8 @@ public class TicTacToeViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> leaveGameSuccess = new MutableLiveData<>();
 
+    private boolean lockLeaveGameAction = false;
+
 
     public void handleGetGameUpdates(UUID gameId) {
         GameRepository.getGameUpdates(gameId, new DataResult<Game>() {
@@ -34,15 +36,20 @@ public class TicTacToeViewModel extends ViewModel {
     }
 
     public void leaveGame(UUID gameId) {
+        if(lockLeaveGameAction)
+            return;
+        lockLeaveGameAction = true;
         GameItemRepository.leaveGame(gameId, new Result() {
             @Override
             public void onSuccess() {
                 leaveGameSuccess.setValue(true);
+                lockLeaveGameAction = false;
             }
 
             @Override
             public void onFailure(String message) {
                 Toast.makeText(ContextProvider.getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                lockLeaveGameAction = false;
             }
         });
     }
