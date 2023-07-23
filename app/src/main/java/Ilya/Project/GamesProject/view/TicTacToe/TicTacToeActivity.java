@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.utils.Constants;
+import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 
 public class TicTacToeActivity extends AppCompatActivity implements View.OnClickListener {
     private final List<Button> buttons = new ArrayList<>();
@@ -44,6 +45,8 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID));
         initLayout();
         ticTacToeViewModel.handleGetGameUpdates(gameId);
+
+        quitGameBtn.setOnClickListener(v -> showQuitConfirmationDialog());
     }
 
     private void initObservers() {
@@ -52,6 +55,9 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
             firstUserTextView.setText(game.getUserFirstName());
             secondUserTextView.setText(game.getUserSecondName());
             
+        });
+        ticTacToeViewModel.leaveGameSuccess.observe(this, leaveGameSuccess -> {
+            moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class));
         });
     }
 
@@ -119,5 +125,14 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         builder.setPositiveButton("Go to Games Menu", (dialog, which) -> finish());//todo extract to strings
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to quit the game?")//todo extract to strings
+                .setPositiveButton("Yes", (dialog, id) -> ticTacToeViewModel.leaveGame(gameId))
+                .setNegativeButton("No", (dialog, id) -> {});
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

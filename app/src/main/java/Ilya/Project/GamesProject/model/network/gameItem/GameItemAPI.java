@@ -20,6 +20,35 @@ import retrofit2.Response;
 
 public class GameItemAPI {
 
+    public static void leaveGame(UUID gameId, Result leaveGameCallback) {
+        User user = UserRepository.getUser();
+        if (user == null) {
+            leaveGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_leave_game));
+            return;
+        }
+        String username = user.getUsername();
+        String password = user.getPassword();
+
+        Call<Void> callable = RetrofitInstance.getGameItemService().changeGame(gameId, username, password, GamePatchAction.LEAVE);
+
+        callable.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int code = response.code();
+                if (200 <= code && code < 300) {
+                    leaveGameCallback.onSuccess();
+                } else {
+                    leaveGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_leave_game));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                leaveGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_leave_game));
+            }
+        });
+    }
+
     public static void joinGame(UUID gameId, Result joinGameCallback) {
         User user = UserRepository.getUser();
         if (user == null) {
