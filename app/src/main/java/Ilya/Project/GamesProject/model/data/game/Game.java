@@ -2,16 +2,15 @@ package Ilya.Project.GamesProject.model.data.game;
 
 import java.util.UUID;
 
+import Ilya.Project.GamesProject.model.data.gameItem.GameType;
+
 public class Game {
     private UUID id;
     private GameType type;
-
     private GameStatus gameStatus;
     private String userFirstName;
     private String userSecondName;
-    private long creationDate;
-
-    private Move lastMove;
+    private Board board;
 
 
     public UUID getId() {
@@ -36,11 +35,17 @@ public class Game {
         this.userSecondName = userSecondName;
     }
 
-    public Move getLastMove() {
-        return lastMove;
-    }
+    public Board getBoard() { return board; }
 
-    public long getCreationDate() {
-        return creationDate;
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", type=" + type +
+                ", gameStatus=" + gameStatus +
+                ", userFirstName='" + userFirstName + '\'' +
+                ", userSecondName='" + userSecondName + '\'' +
+                ", board=" + board +
+                '}';
     }
 }

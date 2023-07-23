@@ -1,5 +1,7 @@
 package Ilya.Project.GamesProject.model.network.game;
 
+import android.util.Log;
+
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
@@ -30,14 +32,18 @@ public class GameAPI {
             public void onResponse(Call<Game> call, Response<Game> response) {
                 int code = response.code();
                 if (200 <= code && code < 300) {
+                    assert response.body() != null;
+                    Log.d("Game", response.body().toString());
                     getGameUpdatesCallback.onSuccess(response.body());
                 } else {
+                    Log.d("Game", Integer.toString(code));
                     getGameUpdatesCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_get_game_updates));
                 }
             }
 
             @Override
             public void onFailure(Call<Game> call, Throwable t) {
+                Log.d("Game", t.toString());
                 getGameUpdatesCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_get_game_updates));
             }
         });
