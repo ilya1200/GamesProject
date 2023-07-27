@@ -4,6 +4,8 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.GameRepository;
@@ -16,6 +18,8 @@ public class TicTacToeViewModel extends ViewModel {
     public MutableLiveData<String> showErrorMessageToastLiveData = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> leaveGameSuccess = new MutableLiveData<>();
+
+    public static AtomicBoolean keepUpdating = new AtomicBoolean(false);
 
     private boolean lockLeaveGameAction = false;
 
@@ -42,6 +46,7 @@ public class TicTacToeViewModel extends ViewModel {
         GameItemRepository.leaveGame(gameId, new Result() {
             @Override
             public void onSuccess() {
+                stopPollingGameUpdates();
                 leaveGameSuccess.setValue(true);
                 lockLeaveGameAction = false;
             }
@@ -52,5 +57,24 @@ public class TicTacToeViewModel extends ViewModel {
                 lockLeaveGameAction = false;
             }
         });
+    }
+
+    public void startPollingGameUpdates(UUID gameId) {
+        keepUpdating.set(true);
+
+        new Thread(() -> {
+            while(keepUpdating.get()){
+                handleGetGameUpdates(gameId);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+        }).start();
+    }
+
+    public void stopPollingGameUpdates() {
+        keepUpdating.set(false);
     }
 }

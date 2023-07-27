@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "Ilya.Project.GamesProject2"
+        applicationId "Ilya.Project.GamesProject"
         minSdk 24
         targetSdk 33
         versionCode 1

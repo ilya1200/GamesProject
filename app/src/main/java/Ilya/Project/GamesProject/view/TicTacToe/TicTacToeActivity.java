@@ -30,6 +30,24 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
     private UUID gameId;
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        ticTacToeViewModel.stopPollingGameUpdates();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ticTacToeViewModel.startPollingGameUpdates(gameId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ticTacToeViewModel.stopPollingGameUpdates();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe);
@@ -44,7 +62,7 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
 
         gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID));
         initLayout();
-        ticTacToeViewModel.handleGetGameUpdates(gameId);
+        ticTacToeViewModel.startPollingGameUpdates(gameId);
 
         quitGameBtn.setOnClickListener(v -> showQuitConfirmationDialog());
     }
