@@ -1,5 +1,7 @@
 package Ilya.Project.GamesProject.model.data.game;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.model.data.gameItem.GameType;
@@ -11,7 +13,7 @@ public class Game {
     private String userFirstName;
     private String userSecondName;
     private Board board;
-
+    private Player currentPlayer;
 
     public UUID getId() {
         return id;
@@ -36,6 +38,8 @@ public class Game {
     }
 
     public Board getBoard() { return board; }
+
+    private Player getCurrentPlayer() {return this.currentPlayer;}
 
     @Override
     public String toString() {
