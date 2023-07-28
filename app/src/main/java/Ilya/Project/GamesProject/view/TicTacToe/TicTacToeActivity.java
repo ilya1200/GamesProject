@@ -62,7 +62,6 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
 
         gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID));
         initLayout();
-        ticTacToeViewModel.startPollingGameUpdates(gameId);
 
         quitGameBtn.setOnClickListener(v -> showQuitConfirmationDialog());
     }
