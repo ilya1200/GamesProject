@@ -12,7 +12,7 @@ public class Game {
     private GameStatus gameStatus;
     private String userFirstName;
     private String userSecondName;
-    private Board board;
+    private Player[][] board;
     private Player currentPlayer;
 
     public UUID getId() {
@@ -37,7 +37,7 @@ public class Game {
         this.userSecondName = userSecondName;
     }
 
-    public Board getBoard() { return board; }
+    public Player[][] getBoard() { return board; }
 
     private Player getCurrentPlayer() {return this.currentPlayer;}
 
