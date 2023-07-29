@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
+import Ilya.Project.GamesProject.model.data.game.Player;
 import Ilya.Project.GamesProject.utils.Constants;
 import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 
@@ -80,6 +81,26 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         });
         ticTacToeViewModel.leaveGameSuccess.observe(this, leaveGameSuccess -> {
             moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class));
+        });
+        ticTacToeViewModel.enabledCells.observe(this, shouldEnable ->{
+            int pos = 0;
+            int size = shouldEnable.length;
+            for (Button b : buttons) {
+                b.setEnabled(shouldEnable[pos/size][pos%size]);
+                pos++;
+            }
+        });
+
+        ticTacToeViewModel.playerCells.observe(this, playerCells ->{
+            int pos = 0;
+            int size = playerCells.length;
+            for (Button b : buttons) {
+                Player player = playerCells[pos/size][pos%size];
+                pos++;
+                if (player != null){
+                    b.setBackgroundResource(player == Player.FIRST? R.drawable.tictactoe_x:R.drawable.tictactoe_o);
+                }
+            }
         });
     }
 

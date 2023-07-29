@@ -39,7 +39,7 @@ public class Game {
 
     public Player[][] getBoard() { return board; }
 
-    private Player getCurrentPlayer() {return this.currentPlayer;}
+    public Player getCurrentPlayer() {return this.currentPlayer;}
 
     @Override
     public String toString() {
