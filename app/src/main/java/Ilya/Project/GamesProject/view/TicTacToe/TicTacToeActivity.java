@@ -83,22 +83,30 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
             moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class));
         });
         ticTacToeViewModel.enabledCells.observe(this, shouldEnable ->{
-            int pos = 0;
-            int size = shouldEnable.length;
-            for (Button b : buttons) {
-                b.setEnabled(shouldEnable[pos/size][pos%size]);
-                pos++;
+            int numRows = shouldEnable.length;
+            int numCols = shouldEnable[0].length;
+
+            for (int row = 0; row < numRows; row++) {
+                for (int col = 0; col < numCols; col++) {
+                    int pos = row * numCols + col;
+                    if (pos < buttons.size()) {
+                        buttons.get(pos).setEnabled(shouldEnable[row][col]);
+                    }
+                }
             }
         });
 
         ticTacToeViewModel.playerCells.observe(this, playerCells ->{
-            int pos = 0;
-            int size = playerCells.length;
-            for (Button b : buttons) {
-                Player player = playerCells[pos/size][pos%size];
-                pos++;
-                if (player != null){
-                    b.setBackgroundResource(player == Player.FIRST? R.drawable.tictactoe_x:R.drawable.tictactoe_o);
+            int numRows = playerCells.length;
+            int numCols = playerCells[0].length;
+
+            for (int row = 0; row < numRows; row++) {
+                for (int col = 0; col < numCols; col++) {
+                    int pos = row * numCols + col;
+                    Player player = playerCells[row][col];
+                    if (pos < buttons.size() && player != null) {
+                        buttons.get(pos).setBackgroundResource(player == Player.FIRST? R.drawable.tictactoe_x:R.drawable.tictactoe_o);
+                    }
                 }
             }
         });
@@ -138,7 +146,7 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         String move = (String) v.getTag();
-
+        ticTacToeViewModel.handleMakeMoveUpdates(gameId, move);
     }
 
     public void setButtonsEnable(boolean isEnable) {
