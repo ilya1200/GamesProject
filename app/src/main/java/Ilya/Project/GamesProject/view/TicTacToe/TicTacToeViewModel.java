@@ -1,5 +1,7 @@
 package Ilya.Project.GamesProject.view.TicTacToe;
 
+import android.util.Pair;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -26,7 +28,7 @@ public class TicTacToeViewModel extends ViewModel {
     public MutableLiveData<String> showErrorMessageToastLiveData = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> leaveGameSuccess = new MutableLiveData<>();
-
+    public MutableLiveData<String> endGameDialogMessage = new MutableLiveData<>();
     public static AtomicBoolean keepUpdating = new AtomicBoolean(false);
 
     private final boolean[][] _enabledCells = new boolean[3][3];
@@ -108,14 +110,17 @@ public class TicTacToeViewModel extends ViewModel {
             case PLAYING:
                 break;
             case PLAYER_1_WIN:
+                endGameDialogMessage.setValue(game.getUserFirstName().equals(username)?"Win": "Lose");
                 break;
             case PLAYER_2_WIN:
+                endGameDialogMessage.setValue(game.getUserSecondName().equals(username)?"Win": "Lose");
                 break;
             case PLAYER_1_LEFT:
-                break;
             case PLAYER_2_LEFT:
+                endGameDialogMessage.setValue("Game over! The other player left...");
                 break;
             case DRAW:
+                endGameDialogMessage.setValue("Draw");
                 break;
         }
     }

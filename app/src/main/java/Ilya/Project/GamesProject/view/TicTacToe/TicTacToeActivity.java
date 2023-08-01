@@ -110,6 +110,7 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
                 }
             }
         });
+        ticTacToeViewModel.endGameDialogMessage.observe(this, this::showEndGameDialog);
     }
 
     private void initLayout() {
@@ -160,20 +161,12 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         finish();
     }
 
-    private void showEndGameDialog(Boolean gameStatus) {
+    private void showEndGameDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(TicTacToeActivity.this);
-        String message = "";
-        if (gameStatus == null) {
-            message = "draw";
-        } else if (gameStatus) {
-            message = "win";
-        } else {
-            message = "lose";
-        }
-        builder.setMessage(message);
         builder.setTitle("Game Ended");
+        builder.setMessage(message);
         builder.setCancelable(false);
-        builder.setPositiveButton("Go to Games Menu", (dialog, which) -> finish());//todo extract to strings
+        builder.setPositiveButton("Go to Games Menu", (dialog, which) -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));//todo extract to strings
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
