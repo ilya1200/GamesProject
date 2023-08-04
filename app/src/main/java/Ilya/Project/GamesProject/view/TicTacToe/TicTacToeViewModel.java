@@ -1,6 +1,6 @@
 package Ilya.Project.GamesProject.view.TicTacToe;
 
-import android.util.Pair;
+import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.data.game.GameStatus;
@@ -16,7 +17,7 @@ import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.GameRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.DataResult;
-import Ilya.Project.GamesProject.utils.Result;
+import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 
 public class TicTacToeViewModel extends ViewModel {
     public MutableLiveData<Game> gameUpdates = new MutableLiveData<>();
@@ -121,20 +122,22 @@ public class TicTacToeViewModel extends ViewModel {
     }
 
     private String getEndGameMessage(GameStatus status, Game game, String username) {
+        Context context = ContextProvider.getApplicationContext();
         switch (status) {
             case PLAYER_1_WIN:
-                return game.getUserFirstName().equals(username) ? "Win" : "Lose";
+                return game.getUserFirstName().equals(username) ? context.getString(R.string.win_message) : context.getString(R.string.lose_message);
             case PLAYER_2_WIN:
-                return game.getUserSecondName().equals(username) ? "Win" : "Lose";
+                return game.getUserSecondName().equals(username) ? context.getString(R.string.win_message) : context.getString(R.string.lose_message);
             case PLAYER_1_LEFT:
             case PLAYER_2_LEFT:
-                return "Game over! The other player left...";
+                return context.getString(R.string.game_over_message);
             case DRAW:
-                return "Draw";
+                return context.getString(R.string.draw_message);
             default:
-                return "Unexpected game status: " + status;
-        }// todo extract string values
+                return context.getString(R.string.unexpected_status_message, status);
+        }
     }
+
 
 
     public void leaveGame(UUID gameId) {
