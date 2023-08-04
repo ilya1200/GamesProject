@@ -20,10 +20,9 @@ import retrofit2.Response;
 
 public class GameItemAPI {
 
-    public static void leaveGame(UUID gameId, Result leaveGameCallback) {
+    public static void leaveGame(UUID gameId) {
         User user = UserRepository.getUser();
         if (user == null) {
-            leaveGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_leave_game));
             return;
         }
         String username = user.getUsername();
@@ -33,18 +32,11 @@ public class GameItemAPI {
 
         callable.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                int code = response.code();
-                if (200 <= code && code < 300) {
-                    leaveGameCallback.onSuccess();
-                } else {
-                    leaveGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_leave_game));
-                }
+            public void onResponse(Call call, Response response) {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                leaveGameCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_failed_to_leave_game));
+            public void onFailure(Call call, Throwable t) {
             }
         });
     }

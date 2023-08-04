@@ -15,8 +15,8 @@ public class GameItemRepository {
         GameItemAPI.joinGame(gameId, joinGameCallback);
     }
 
-    public static void leaveGame(UUID gameId, Result leaveGameCallback) {
-        GameItemAPI.leaveGame(gameId, leaveGameCallback);
+    public static void leaveGame(UUID gameId) {
+        GameItemAPI.leaveGame(gameId);
     }
 
     public static void getGameList(DataResult<List<GameItem>> getGameListCallback) {

@@ -141,17 +141,7 @@ public class TicTacToeViewModel extends ViewModel {
         stopPollingGameUpdates();
         leaveGameSuccess.setValue(true);
 
-        GameItemRepository.leaveGame(gameId, new Result() {
-            @Override
-            public void onSuccess() {
-            }
-
-            @Override
-            public void onFailure(String message) {
-                //Toast.makeText(ContextProvider.getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                //todo make no callback leaveGame
-            }
-        });
+        GameItemRepository.leaveGame(gameId);
     }
 
     public void startPollingGameUpdates(UUID gameId) {

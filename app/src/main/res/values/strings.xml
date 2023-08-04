@@ -4,7 +4,6 @@
     <string name="error_login_failed">login failed</string>
     <string name="error_register_failed">failed to register</string>
     <string name="error_failed_to_join_game">failed to join game</string>
-    <string name="error_failed_to_leave_game">failed to leave game</string>
     <string name="error_failed_to_get_list_of_game">failed to get list of games</string>
     <string name="error_failed_to_create_game">failed to create a game</string>
     <string name="login_header">login</string>
