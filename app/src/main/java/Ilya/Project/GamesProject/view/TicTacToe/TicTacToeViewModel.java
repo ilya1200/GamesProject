@@ -104,26 +104,38 @@ public class TicTacToeViewModel extends ViewModel {
         }
         enabledCells.setValue(_enabledCells);
 
-        switch (game.getGameStatus()){
-            case WAITING_TO_START:
-                break;
-            case PLAYING:
-                break;
-            case PLAYER_1_WIN:
-                endGameDialogMessage.setValue(game.getUserFirstName().equals(username)?"Win": "Lose");
-                break;
-            case PLAYER_2_WIN:
-                endGameDialogMessage.setValue(game.getUserSecondName().equals(username)?"Win": "Lose");
-                break;
-            case PLAYER_1_LEFT:
-            case PLAYER_2_LEFT:
-                endGameDialogMessage.setValue("Game over! The other player left...");
-                break;
-            case DRAW:
-                endGameDialogMessage.setValue("Draw");
-                break;
+        GameStatus status = game.getGameStatus();
+
+        if (isGameFinished(status)) {
+            stopPollingGameUpdates();
+            endGameDialogMessage.setValue(getEndGameMessage(status, game, username));
         }
     }
+
+    private boolean isGameFinished(GameStatus status) {
+        return status == GameStatus.PLAYER_1_WIN ||
+                status == GameStatus.PLAYER_2_WIN ||
+                status == GameStatus.PLAYER_1_LEFT ||
+                status == GameStatus.PLAYER_2_LEFT ||
+                status == GameStatus.DRAW;
+    }
+
+    private String getEndGameMessage(GameStatus status, Game game, String username) {
+        switch (status) {
+            case PLAYER_1_WIN:
+                return game.getUserFirstName().equals(username) ? "Win" : "Lose";
+            case PLAYER_2_WIN:
+                return game.getUserSecondName().equals(username) ? "Win" : "Lose";
+            case PLAYER_1_LEFT:
+            case PLAYER_2_LEFT:
+                return "Game over! The other player left...";
+            case DRAW:
+                return "Draw";
+            default:
+                return "Unexpected game status: " + status;
+        }// todo extract string values
+    }
+
 
     public void leaveGame(UUID gameId) {
         stopPollingGameUpdates();
