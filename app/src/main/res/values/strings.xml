@@ -26,8 +26,14 @@
     <string name="failed_to_make_a_move">Failed to make a move</string>
     <string name="win_message">Win</string>
     <string name="lose_message">Lose</string>
-    <string name="game_over_message">Game over! The other player left...</string>
+    <string name="game_over_message">Game over! The other player left…</string>
     <string name="draw_message">Draw</string>
     <string name="unexpected_status_message">Unexpected game status: %1$s</string>
+    <string name="quit_dialog_title">Quit Game</string>
+    <string name="quit_dialog_message">Are you sure you want to quit the game?</string>
+    <string name="quit_dialog_positive_button">Yes</string>
+    <string name="quit_dialog_negative_button">No</string>
+    <string name="end_game_dialog_title">Game Ended</string>
+    <string name="end_game_dialog_go_to_menu_button">Go to Games Menu</string>
 
 </resources>

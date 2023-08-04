@@ -163,20 +163,23 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
 
     private void showEndGameDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(TicTacToeActivity.this);
-        builder.setTitle("Game Ended");
+        builder.setTitle(getString(R.string.end_game_dialog_title));
         builder.setMessage(message);
         builder.setCancelable(false);
-        builder.setPositiveButton("Go to Games Menu", (dialog, which) -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));//todo extract to strings
+        builder.setPositiveButton(getString(R.string.end_game_dialog_go_to_menu_button), (dialog, which) -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
+
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to quit the game?")//todo extract to strings
-                .setPositiveButton("Yes", (dialog, id) -> ticTacToeViewModel.leaveGame(gameId))
-                .setNegativeButton("No", (dialog, id) -> {});
+        builder.setMessage(getString(R.string.quit_dialog_message))
+                .setTitle(getString(R.string.quit_dialog_title))
+                .setPositiveButton(getString(R.string.quit_dialog_positive_button), (dialog, id) -> ticTacToeViewModel.leaveGame(gameId))
+                .setNegativeButton(getString(R.string.quit_dialog_negative_button), (dialog, id) -> {});
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 }
