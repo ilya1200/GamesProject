@@ -1,6 +1,6 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAMES;
+import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -78,14 +78,14 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         gameListViewModel.gameList.observe(this, gameList -> {
             games.clear();
             games.addAll(gameList);
-            Log.d(GAMES, "GameList modified: "+ games.size());
+            Log.d(GAMES_LOG, "GameList modified: "+ games.size());
             gamesAdapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });
         gameListViewModel.joinGameSuccess.observe(this, gameId -> {
             if (gameId != null) {
                 Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
-                intent.putExtra(Constants.GAME_ID, gameId.toString());
+                intent.putExtra(Constants.GAME_ID_EXTRA, gameId.toString());
                 moveToActivity(intent);
             }
         });
@@ -97,7 +97,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         gameListViewModel.createGameSuccess.observe(this, gameId -> {
             if(gameId != null) {
                 Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
-                intent.putExtra(Constants.GAME_ID, gameId.toString());
+                intent.putExtra(Constants.GAME_ID_EXTRA, gameId.toString());
                 moveToActivity(intent);
             }
         });

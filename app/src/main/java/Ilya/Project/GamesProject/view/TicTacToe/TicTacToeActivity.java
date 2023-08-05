@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
+import Ilya.Project.GamesProject.model.data.game.Game;
+import Ilya.Project.GamesProject.model.data.game.GameStatus;
 import Ilya.Project.GamesProject.utils.Constants;
 import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 
@@ -57,12 +59,12 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_tic_tac_toe);
         ticTacToeViewModel = new ViewModelProvider(this).get(TicTacToeViewModel.class);
 
-        if (getIntent().getExtras() == null || !getIntent().getExtras().containsKey(Constants.GAME_ID)) {
+        if (getIntent().getExtras() == null || !getIntent().getExtras().containsKey(Constants.GAME_ID_EXTRA)) {
             Toast.makeText(TicTacToeActivity.this, R.string.internal_error, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
-        gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID));
+        gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID_EXTRA));
         initLayout();
         initObservers();
     }
@@ -74,13 +76,15 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
 
     private void initObservers() {
         ticTacToeViewModel.showErrorMessageToastLiveData.observe(this, errorMessage -> Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show());
-        ticTacToeViewModel.gameUpdates.observe(this, game -> {
+        ticTacToeViewModel.gameUpdatesLiveData.observe(this, game -> {
             firstUserTextView.setText(game.getUserFirstName());
-            secondUserTextView.setText(game.getUserSecondName());
+            secondUserTextView.setText((game.getGameStatus() == GameStatus.WAITING_TO_START)?getString(R.string.start_game_waiting_for_second_user): game.getUserSecondName());
             ticTacToeViewModel.updateBoard(game, buttons);
+            if (ticTacToeViewModel.isGameFinished(game.getGameStatus())) {
+                ticTacToeViewModel.stopPollingGameUpdates();
+                showEndGameDialog(game);
+            }
         });
-        ticTacToeViewModel.leaveGameSuccess.observe(this, leaveGameSuccess -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));
-        ticTacToeViewModel.endGameDialogMessage.observe(this, this::showEndGameDialog);
     }
 
     private void initLayout() {
@@ -118,7 +122,7 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         String move = (String) v.getTag();
-        ticTacToeViewModel.handleMakeMoveUpdates(gameId, move);
+        ticTacToeViewModel.makeMove(gameId, move);
     }
 
     private void moveToActivity(Intent intent) {
@@ -126,21 +130,24 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         finish();
     }
 
-    private void showEndGameDialog(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(TicTacToeActivity.this);
-        builder.setTitle(getString(R.string.end_game_dialog_title));
-        builder.setMessage(message);
-        builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.end_game_dialog_go_to_menu_button), (dialog, which) -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));
+    private void showEndGameDialog(Game game) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TicTacToeActivity.this)
+                .setTitle(getString(R.string.end_game_dialog_title))
+                .setMessage(ticTacToeViewModel.getEndGameMessage(game))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.end_game_dialog_go_to_menu_button), (dialog, which) -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
     private void showQuitConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.quit_dialog_message))
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.quit_dialog_message))
                 .setTitle(getString(R.string.quit_dialog_title))
-                .setPositiveButton(getString(R.string.quit_dialog_positive_button), (dialog, id) -> ticTacToeViewModel.leaveGame(gameId))
+                .setPositiveButton(getString(R.string.quit_dialog_positive_button), (dialog, id) -> {
+                    ticTacToeViewModel.leaveGame(gameId);
+                    moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class));
+                })
                 .setNegativeButton(getString(R.string.quit_dialog_negative_button), (dialog, id) -> {
                 });
         AlertDialog dialog = builder.create();

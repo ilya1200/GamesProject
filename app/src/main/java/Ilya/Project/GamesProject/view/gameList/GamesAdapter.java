@@ -1,6 +1,6 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAMES;
+import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
 
 import android.content.Context;
 import android.util.Log;
@@ -39,7 +39,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(GAMES, String.format("onBindViewHolder was called, position: %d and viewHolder %s", position, holder.toString()));
+        Log.d(GAMES_LOG, String.format("onBindViewHolder was called, position: %d and viewHolder %s", position, holder.toString()));
         GameItem game = games.get(holder.getAdapterPosition());
         holder.textViewGameType.setText(game.getGameType().toString().replace('_',' '));
         holder.textViewUserName.setText(game.getFirstUser());

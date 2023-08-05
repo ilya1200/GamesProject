@@ -1,6 +1,6 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAMES;
+import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
 
 import android.util.Log;
 
@@ -52,11 +52,11 @@ public class GameListViewModel extends ViewModel {
     }
 
     public void handleGetGameList() {
-        Log.d(GAMES, "handleGetGameList was called");
+        Log.d(GAMES_LOG, "handleGetGameList was called");
         GameItemRepository.getGameList(new DataResult<List<GameItem>>() {
             @Override
             public void onSuccess(List<GameItem> gameList) {
-                Log.d(GAMES, "handleGetGameList onSuccess: "+ gameList.size());
+                Log.d(GAMES_LOG, "handleGetGameList onSuccess: "+ gameList.size());
                 GameListViewModel.this.gameList.setValue(gameList);
             }
 

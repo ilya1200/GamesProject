@@ -1,5 +1,7 @@
 package Ilya.Project.GamesProject.model.network.game;
 
+import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
+
 import android.util.Log;
 
 import java.util.UUID;
@@ -32,17 +34,17 @@ public class GameAPI {
                 int code = response.code();
                 if (200 <= code && code < 300) {
                     assert response.body() != null;
-                    Log.d("Game", response.body().toString());
+                    Log.d(GAMES_LOG, response.body().toString());
                     makeMoveCallback.onSuccess(response.body());
                 } else {
-                    Log.d("Game", Integer.toString(code));
+                    Log.d(GAMES_LOG, Integer.toString(code));
                     makeMoveCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_make_a_move));
                 }
             }
 
             @Override
             public void onFailure(Call<Game> call, Throwable t) {
-                Log.d("Game", t.toString());
+                Log.d(GAMES_LOG, t.toString());
                 makeMoveCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_make_a_move));
             }
         });
@@ -63,17 +65,17 @@ public class GameAPI {
                 int code = response.code();
                 if (200 <= code && code < 300) {
                     assert response.body() != null;
-                    Log.d("Game", response.body().toString());
+                    Log.d(GAMES_LOG, response.body().toString());
                     getGameUpdatesCallback.onSuccess(response.body());
                 } else {
-                    Log.d("Game", Integer.toString(code));
+                    Log.d(GAMES_LOG, Integer.toString(code));
                     getGameUpdatesCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_get_game_updates));
                 }
             }
 
             @Override
             public void onFailure(Call<Game> call, Throwable t) {
-                Log.d("Game", t.toString());
+                Log.d(GAMES_LOG, t.toString());
                 getGameUpdatesCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_get_game_updates));
             }
         });
