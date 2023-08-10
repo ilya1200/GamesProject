@@ -85,9 +85,14 @@ public class TicTacToeViewModel extends ViewModel {
         return (player == Player.FIRST && game.getUserFirstName().equals(username) || player == Player.SECOND && game.getUserSecondName().equals(username));
     }
 
-    public boolean isGameFinished(GameStatus status) {
-        return status == GameStatus.PLAYER_1_WIN || status == GameStatus.PLAYER_2_WIN || status == GameStatus.PLAYER_1_LEFT || status == GameStatus.PLAYER_2_LEFT || status == GameStatus.DRAW;
+    public boolean isLegitGameFinish(GameStatus status) {
+        return status == GameStatus.PLAYER_1_WIN || status == GameStatus.PLAYER_2_WIN || status == GameStatus.DRAW;
     }
+
+    public boolean isTechnicalGameFinish(GameStatus status) {
+        return  status == GameStatus.PLAYER_1_LEFT || status == GameStatus.PLAYER_2_LEFT;
+    }
+
 
     public String getEndGameMessage(Game game) {
         Context context = ContextProvider.getApplicationContext();

@@ -1,7 +1,5 @@
 package Ilya.Project.GamesProject.model.data.game;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.model.data.gameItem.GameType;
@@ -32,6 +30,14 @@ public class Game {
     public String getUserSecondName() {
         return userSecondName;
     }
+
+    public boolean hasUserFirst(){
+        return userFirstName!=null;
+    };
+
+    public boolean hasUserSecond(){
+        return userSecondName!=null;
+    };
 
     public void setUserSecondName(String userSecondName) {
         this.userSecondName = userSecondName;

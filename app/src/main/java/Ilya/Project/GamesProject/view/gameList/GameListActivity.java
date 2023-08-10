@@ -1,11 +1,8 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +23,7 @@ import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 import Ilya.Project.GamesProject.utils.Constants;
 import Ilya.Project.GamesProject.view.TicTacToe.TicTacToeActivity;
 import Ilya.Project.GamesProject.view.login.LoginActivity;
+import timber.log.Timber;
 
 public class GameListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     GameListViewModel gameListViewModel;
@@ -78,7 +76,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         gameListViewModel.gameList.observe(this, gameList -> {
             games.clear();
             games.addAll(gameList);
-            Log.d(GAMES_LOG, "GameList modified: "+ games.size());
+            Timber.d("GameList modified: %s", games.size());
             gamesAdapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });

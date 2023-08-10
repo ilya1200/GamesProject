@@ -1,9 +1,5 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
-
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,6 +13,7 @@ import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.DataResult;
 import Ilya.Project.GamesProject.utils.Result;
+import timber.log.Timber;
 
 public class GameListViewModel extends ViewModel {
     public MutableLiveData<String> username = new MutableLiveData<>();
@@ -52,11 +49,11 @@ public class GameListViewModel extends ViewModel {
     }
 
     public void handleGetGameList() {
-        Log.d(GAMES_LOG, "handleGetGameList was called");
+        Timber.d("handleGetGameList was called");
         GameItemRepository.getGameList(new DataResult<List<GameItem>>() {
             @Override
             public void onSuccess(List<GameItem> gameList) {
-                Log.d(GAMES_LOG, "handleGetGameList onSuccess: "+ gameList.size());
+                Timber.d("handleGetGameList onSuccess: %s", gameList.size());
                 GameListViewModel.this.gameList.setValue(gameList);
             }
 

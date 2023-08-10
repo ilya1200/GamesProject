@@ -1,9 +1,6 @@
 package Ilya.Project.GamesProject.view.gameList;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAMES_LOG;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +14,7 @@ import java.util.List;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
+import timber.log.Timber;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
     private final List<GameItem> games;
@@ -39,7 +37,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(GAMES_LOG, String.format("onBindViewHolder was called, position: %d and viewHolder %s", position, holder.toString()));
+        Timber.d("onBindViewHolder was called, position: " + position + " and viewHolder: " + holder);
         GameItem game = games.get(holder.getAdapterPosition());
         holder.textViewGameType.setText(game.getGameType().toString().replace('_',' '));
         holder.textViewUserName.setText(game.getFirstUser());

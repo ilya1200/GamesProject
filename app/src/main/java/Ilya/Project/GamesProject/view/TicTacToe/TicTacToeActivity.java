@@ -2,7 +2,6 @@ package Ilya.Project.GamesProject.view.TicTacToe;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,6 +22,7 @@ import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.data.game.GameStatus;
 import Ilya.Project.GamesProject.utils.Constants;
 import Ilya.Project.GamesProject.view.gameList.GameListActivity;
+import timber.log.Timber;
 
 public class TicTacToeActivity extends AppCompatActivity implements View.OnClickListener {
     private final List<Button> buttons = new ArrayList<>();
@@ -33,28 +33,28 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onPause() {
-        Log.d("Game", "onPause");
+        Timber.d("onPause");
         ticTacToeViewModel.stopPollingGameUpdates();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        Log.d("Game", "onResume");
+        Timber.d("onResume");
         ticTacToeViewModel.startPollingGameUpdates(gameId);
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("Game", "onDestroy");
+        Timber.d("onDestroy");
         ticTacToeViewModel.stopPollingGameUpdates();
         super.onDestroy();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Game", "onCreate");
+        Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe);
         ticTacToeViewModel = new ViewModelProvider(this).get(TicTacToeViewModel.class);
@@ -77,12 +77,18 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
     private void initObservers() {
         ticTacToeViewModel.showErrorMessageToastLiveData.observe(this, errorMessage -> Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show());
         ticTacToeViewModel.gameUpdatesLiveData.observe(this, game -> {
+            GameStatus gameStatus = game.getGameStatus();
             firstUserTextView.setText(game.getUserFirstName());
-            secondUserTextView.setText((game.getGameStatus() == GameStatus.WAITING_TO_START)?getString(R.string.start_game_waiting_for_second_user): game.getUserSecondName());
-            ticTacToeViewModel.updateBoard(game, buttons);
-            if (ticTacToeViewModel.isGameFinished(game.getGameStatus())) {
+            secondUserTextView.setText((gameStatus == GameStatus.WAITING_TO_START) ? getString(R.string.start_game_waiting_for_second_user) : game.getUserSecondName());
+            if (ticTacToeViewModel.isTechnicalGameFinish(gameStatus) || ticTacToeViewModel.isLegitGameFinish(gameStatus)) {
                 ticTacToeViewModel.stopPollingGameUpdates();
                 showEndGameDialog(game);
+
+                if (ticTacToeViewModel.isLegitGameFinish(gameStatus)) {
+                    ticTacToeViewModel.updateBoard(game, buttons);
+                }
+            } else {
+                ticTacToeViewModel.updateBoard(game, buttons);
             }
         });
     }
@@ -135,7 +141,10 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
                 .setTitle(getString(R.string.end_game_dialog_title))
                 .setMessage(ticTacToeViewModel.getEndGameMessage(game))
                 .setCancelable(false)
-                .setPositiveButton(getString(R.string.end_game_dialog_go_to_menu_button), (dialog, which) -> moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class)));
+                .setPositiveButton(getString(R.string.end_game_dialog_go_to_menu_button), (dialog, which) -> {
+                    ticTacToeViewModel.leaveGame(gameId);
+                    moveToActivity(new Intent(TicTacToeActivity.this, GameListActivity.class));
+                });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
