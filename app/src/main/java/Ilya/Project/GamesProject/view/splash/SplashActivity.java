@@ -22,11 +22,11 @@ public class SplashActivity extends AppCompatActivity {
 
         splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         initObservers();
-
-        splashViewModel.handleLogin();
+        splashViewModel.getConfig(this);
     }
 
     private void initObservers() {
+        splashViewModel.isGetConfigFinishedLiveData.observe(this, isGetConfigSucceed -> splashViewModel.handleLogin());
         splashViewModel.loginLiveData.observe(this, isLoggedInSuccess -> {
             if (isLoggedInSuccess) {
                 moveToActivity(new Intent(SplashActivity.this, GameListActivity.class));
