@@ -1,7 +1,5 @@
 package Ilya.Project.GamesProject.view.TicTacToe;
 
-import static Ilya.Project.GamesProject.utils.Constants.GAME_UPDATES_INTERVAL_MILLISECONDS;
-
 import android.content.Context;
 import android.os.Handler;
 import android.widget.Button;
@@ -22,6 +20,7 @@ import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.GameRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.DataResult;
+import Ilya.Project.GamesProject.utils.firebase.Firebase;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 
 public class TicTacToeViewModel extends ViewModel {
@@ -29,6 +28,7 @@ public class TicTacToeViewModel extends ViewModel {
     private final Handler gameUpdatesHandler = new Handler();
     public MutableLiveData<Game> gameUpdatesLiveData = new MutableLiveData<>();
     public MutableLiveData<String> showErrorMessageToastLiveData = new MutableLiveData<>();
+    private final long gameUpdatesIntervalMillis = Firebase.getGameUpdatesIntervalMillis();
 
     public void getGameUpdates(UUID gameId) {
         GameRepository.getGameUpdates(gameId, new DataResult<Game>() {
@@ -131,7 +131,7 @@ public class TicTacToeViewModel extends ViewModel {
             return;
         }
         getGameUpdates(gameId);
-        gameUpdatesHandler.postDelayed(() -> pollGameUpdates(gameId), GAME_UPDATES_INTERVAL_MILLISECONDS);
+        gameUpdatesHandler.postDelayed(() -> pollGameUpdates(gameId), gameUpdatesIntervalMillis);
     }
 
     public void stopPollingGameUpdates() {
