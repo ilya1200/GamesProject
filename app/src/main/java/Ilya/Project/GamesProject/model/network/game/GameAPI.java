@@ -3,9 +3,9 @@ package Ilya.Project.GamesProject.model.network.game;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.data.game.MoveRequest;
+import Ilya.Project.GamesProject.model.data.user.User;
 import Ilya.Project.GamesProject.model.network.retrofit.RetrofitInstance;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.DataResult;

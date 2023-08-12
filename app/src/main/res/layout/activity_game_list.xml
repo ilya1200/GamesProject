@@ -18,7 +18,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/games_user"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:paddingStart="4dp"
         android:paddingEnd="0dp"
         android:paddingTop="4dp"
@@ -28,20 +28,33 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/loginHeader"
-        app:layout_constraintEnd_toStartOf="@+id/logOutBtn"/>
+        app:layout_constraintEnd_toStartOf="@+id/logOutBtn" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/games_user_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="0dp"
+        android:text="@string/user_score"
+        android:textAlignment="viewStart"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/logOutBtn"
+        app:layout_constraintTop_toBottomOf="@+id/games_user" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/loginHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="@string/games_header"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/logOutBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/games_user_score" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

@@ -12,10 +12,10 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.data.game.GameStatus;
 import Ilya.Project.GamesProject.model.data.game.Player;
+import Ilya.Project.GamesProject.model.data.user.User;
 import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.GameRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;

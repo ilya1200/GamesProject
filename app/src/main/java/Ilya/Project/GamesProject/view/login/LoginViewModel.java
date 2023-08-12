@@ -5,11 +5,10 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import Ilya.Project.GamesProject.model.data.User;
+import Ilya.Project.GamesProject.model.data.user.User;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.Result;
 import Ilya.Project.GamesProject.utils.UserValidator;
-
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 
 public class LoginViewModel extends ViewModel {

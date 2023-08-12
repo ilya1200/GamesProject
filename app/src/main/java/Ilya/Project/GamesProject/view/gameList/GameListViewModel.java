@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 import java.util.UUID;
 
-import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 import Ilya.Project.GamesProject.model.data.gameItem.GameType;
+import Ilya.Project.GamesProject.model.data.user.User;
+import Ilya.Project.GamesProject.model.data.user.UserScore;
 import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.DataResult;
@@ -23,6 +24,7 @@ public class GameListViewModel extends ViewModel {
     public MutableLiveData<UUID> createGameSuccess = new MutableLiveData<>();
 
     public MutableLiveData<String> showErrorMessageToastLiveData = new MutableLiveData<>();
+    public MutableLiveData<UserScore> userScoreMutableLiveData = new MutableLiveData<>();
 
 
     public void displayUsername() {
@@ -76,6 +78,21 @@ public class GameListViewModel extends ViewModel {
             public void onFailure(String errorMessage) {
                 createGameSuccess.setValue(null);
                 showErrorMessageToastLiveData.setValue(errorMessage);
+            }
+        });
+    }
+
+    public void handleGetUserScore() {
+        User user = UserRepository.getUser();
+
+        UserRepository.getScore(user, new DataResult<UserScore>() {
+            @Override
+            public void onSuccess(UserScore data) {
+                userScoreMutableLiveData.setValue(data);
+            }
+
+            @Override
+            public void onFailure(String message) {
             }
         });
     }

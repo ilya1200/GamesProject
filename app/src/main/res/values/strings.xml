@@ -22,6 +22,7 @@
     <string name="register_already_have_user_link">Already have a user?</string>
     <string name="register_btn">register</string>
     <string name="internal_error">Internal Error</string>
+    <string name="failed_to_get_user_score">Failed to get a user score</string>
     <string name="failed_to_get_game_updates">Failed to get game updates</string>
     <string name="failed_to_make_a_move">Failed to make a move</string>
     <string name="win_message">Win</string>
@@ -36,5 +37,6 @@
     <string name="end_game_dialog_title">Game Ended</string>
     <string name="end_game_dialog_go_to_menu_button">Go to Games Menu</string>
     <string name="start_game_waiting_for_second_user">Waiting for second user</string>
+    <string name="user_score">wins: %d | losses: %d</string>
 
 </resources>

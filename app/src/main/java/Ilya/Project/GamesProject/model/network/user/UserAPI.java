@@ -1,8 +1,10 @@
 package Ilya.Project.GamesProject.model.network.user;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.User;
+import Ilya.Project.GamesProject.model.data.user.User;
+import Ilya.Project.GamesProject.model.data.user.UserScore;
 import Ilya.Project.GamesProject.model.network.retrofit.RetrofitInstance;
+import Ilya.Project.GamesProject.utils.DataResult;
 import Ilya.Project.GamesProject.utils.Result;
 import Ilya.Project.GamesProject.utils.providers.ContextProvider;
 import retrofit2.Call;
@@ -66,5 +68,38 @@ public class UserAPI {
                 registerCallback.onFailure(ContextProvider.getApplicationContext().getString(R.string.error_register_failed));
             }
         });
+    }
+
+    public static void getScore(User user, DataResult<UserScore> userScoreDataResult) {
+        if (user == null || user.getUsername() == null || user.getUsername().isEmpty()) {
+            Timber.e("Failed to get user score, the user is null or empty");
+            userScoreDataResult.onFailure(ContextProvider.getApplicationContext().getString(R.string.internal_error));
+            return;
+        }
+
+        Call<UserScore> callable = RetrofitInstance.getUserService().getScore(user.getUsername());
+
+        callable.enqueue(new Callback<UserScore>() {
+            @Override
+            public void onResponse(Call<UserScore> call, Response<UserScore> response) {
+                int code = response.code();
+                if (200 <= code && code < 300) {
+                    assert response.body() != null;
+                    Timber.d(response.body().toString());
+                    userScoreDataResult.onSuccess(response.body());
+                } else {
+                    Timber.e(Integer.toString(code));
+                    userScoreDataResult.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_get_user_score));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserScore> call, Throwable t) {
+                Timber.e(t.toString());
+                userScoreDataResult.onFailure(ContextProvider.getApplicationContext().getString(R.string.failed_to_get_user_score));
+            }
+        });
+
+
     }
 }

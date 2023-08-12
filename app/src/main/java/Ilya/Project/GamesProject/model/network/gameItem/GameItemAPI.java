@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.User;
 import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
 import Ilya.Project.GamesProject.model.data.gameItem.GamePatchAction;
 import Ilya.Project.GamesProject.model.data.gameItem.GameRequest;
 import Ilya.Project.GamesProject.model.data.gameItem.GameType;
+import Ilya.Project.GamesProject.model.data.user.User;
 import Ilya.Project.GamesProject.model.network.retrofit.RetrofitInstance;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
 import Ilya.Project.GamesProject.utils.DataResult;
