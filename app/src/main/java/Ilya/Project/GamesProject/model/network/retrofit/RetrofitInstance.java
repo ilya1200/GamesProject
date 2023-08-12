@@ -3,11 +3,12 @@ package Ilya.Project.GamesProject.model.network.retrofit;
 import Ilya.Project.GamesProject.model.network.game.GameService;
 import Ilya.Project.GamesProject.model.network.gameItem.GameItemService;
 import Ilya.Project.GamesProject.model.network.user.UserService;
+import Ilya.Project.GamesProject.utils.Constants;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
-    private static final String BASE_URL = "http://192.168.1.22:8080/";
+    private static final String BASE_URL = Constants.BASE_URL;
     private static Retrofit retrofit;
 
     public static UserService getUserService() {
