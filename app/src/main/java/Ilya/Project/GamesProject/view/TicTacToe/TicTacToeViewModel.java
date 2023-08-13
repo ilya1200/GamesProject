@@ -82,7 +82,7 @@ public class TicTacToeViewModel extends ViewModel {
     }
 
     private boolean isMyTurn(Game game, Player player, String username) {
-        return (player == Player.FIRST && game.getUserFirstName().equals(username) || player == Player.SECOND && game.getUserSecondName().equals(username));
+        return game.getGameStatus() == GameStatus.PLAYING && (player == Player.FIRST && game.getUserFirstName().equals(username) || player == Player.SECOND && game.getUserSecondName().equals(username));
     }
 
     public boolean isLegitGameFinish(GameStatus status) {
@@ -103,9 +103,9 @@ public class TicTacToeViewModel extends ViewModel {
         String username = user.getUsername();
         switch (game.getGameStatus()) {
             case PLAYER_1_WIN:
-                return game.getUserFirstName().equals(username) ? context.getString(R.string.win_message) : context.getString(R.string.lose_message);
+                return game.hasUserFirst() && game.getUserFirstName().equals(username) ? context.getString(R.string.win_message) : context.getString(R.string.lose_message);
             case PLAYER_2_WIN:
-                return game.getUserSecondName().equals(username) ? context.getString(R.string.win_message) : context.getString(R.string.lose_message);
+                return game.hasUserSecond() && game.getUserSecondName().equals(username) ? context.getString(R.string.win_message) : context.getString(R.string.lose_message);
             case PLAYER_1_LEFT:
             case PLAYER_2_LEFT:
                 return context.getString(R.string.game_over_message);
