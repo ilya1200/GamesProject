@@ -28,7 +28,11 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
     private final List<Button> buttons = new ArrayList<>();
     TicTacToeViewModel ticTacToeViewModel;
     private MaterialTextView firstUserTextView;
+    private MaterialTextView firstUserWins;
+    private MaterialTextView firstUserLosses;
     private MaterialTextView secondUserTextView;
+    private MaterialTextView secondUserWins;
+    private MaterialTextView secondUserLosses;
     private UUID gameId;
 
     @Override
@@ -57,6 +61,12 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe);
+        firstUserWins = findViewById(R.id.tic_tac_toe_first_user_score_wins);
+        firstUserLosses = findViewById(R.id.tic_tac_toe_first_user_score_losses);
+
+        secondUserWins = findViewById(R.id.tic_tac_toe_second_user_score_wins);
+        secondUserLosses = findViewById(R.id.tic_tac_toe_second_user_score_losses);
+
         ticTacToeViewModel = new ViewModelProvider(this).get(TicTacToeViewModel.class);
 
         if (getIntent().getExtras() == null || !getIntent().getExtras().containsKey(Constants.GAME_ID_EXTRA)) {

@@ -13,20 +13,56 @@
         android:layout_height="80dp"
         app:icon="@drawable/logout"
         app:iconSize="40dp"
-        android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/first_user"
         style="@style/TextAppearance.Material3.HeadlineSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="First_User"
         android:textAllCaps="true"
+        app:layout_constraintEnd_toStartOf="@+id/quit_game_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/first_user_wins_and_losses_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/first_user">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tic_tac_toe_first_user_score_wins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_wins"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | " />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tic_tac_toe_first_user_score_losses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_losses"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/second_user"
@@ -37,7 +73,43 @@
         android:text="Second user"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_user" />
+        app:layout_constraintTop_toBottomOf="@+id/first_user_wins_and_losses_ll" />
+
+    <LinearLayout
+        android:id="@+id/second_user_wins_and_losses_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/second_user">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tic_tac_toe_second_user_score_wins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_wins"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | " />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tic_tac_toe_second_user_score_losses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Losses: 0"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button1"
