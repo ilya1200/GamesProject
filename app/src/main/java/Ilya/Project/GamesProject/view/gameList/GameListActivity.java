@@ -17,6 +17,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import Ilya.Project.GamesProject.R;
 import Ilya.Project.GamesProject.model.data.gameItem.GameItem;
@@ -28,6 +29,9 @@ import timber.log.Timber;
 public class GameListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     GameListViewModel gameListViewModel;
     private MaterialTextView gamesUsername;
+
+    private MaterialTextView gamesUserScore;
+
     private RecyclerView gamesRV;
     private GamesAdapter gamesAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -36,7 +40,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
 
     private final GameItemClickListener gameItemClickListener = (gameId) -> gameListViewModel.handleGameClick(gameId);
 
-    private List<GameItem> games = new ArrayList<>();
+    private final List<GameItem> games = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
 
         MaterialButton logOutBtn = findViewById(R.id.logOutBtn);
         gamesUsername = findViewById(R.id.games_user);
+        gamesUserScore = findViewById(R.id.games_user_score);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         createGameFAB = findViewById(R.id.createGameFAB);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -57,6 +62,7 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         initObservers();
         gameListViewModel.displayUsername();
         gameListViewModel.handleGetGameList();
+        gameListViewModel.handleGetUserScore();
 
         logOutBtn.setOnClickListener(v -> {
             gameListViewModel.handleLogOut();
@@ -93,11 +99,15 @@ public class GameListActivity extends AppCompatActivity implements SwipeRefreshL
         });
 
         gameListViewModel.createGameSuccess.observe(this, gameId -> {
-            if(gameId != null) {
+            if (gameId != null) {
                 Intent intent = new Intent(GameListActivity.this, TicTacToeActivity.class);
                 intent.putExtra(Constants.GAME_ID_EXTRA, gameId.toString());
                 moveToActivity(intent);
             }
+        });
+        gameListViewModel.userScoreMutableLiveData.observe(this, userScore -> {
+            String user_score = String.format(Locale.ENGLISH, getResources().getString(R.string.user_score), userScore.getWins(), userScore.getLosses());
+            gamesUserScore.setText(user_score);
         });
     }
 

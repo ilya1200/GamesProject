@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
 import Ilya.Project.GamesProject.R;
-import Ilya.Project.GamesProject.model.data.User;
+import Ilya.Project.GamesProject.model.data.user.User;
 import Ilya.Project.GamesProject.view.gameList.GameListActivity;
 import Ilya.Project.GamesProject.view.register.RegisterActivity;
 

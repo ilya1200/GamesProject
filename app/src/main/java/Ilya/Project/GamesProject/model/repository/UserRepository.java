@@ -1,8 +1,10 @@
 package Ilya.Project.GamesProject.model.repository;
 
-import Ilya.Project.GamesProject.model.data.User;
+import Ilya.Project.GamesProject.model.data.user.User;
+import Ilya.Project.GamesProject.model.data.user.UserScore;
 import Ilya.Project.GamesProject.model.local.UserSharedPrefs;
 import Ilya.Project.GamesProject.model.network.user.UserAPI;
+import Ilya.Project.GamesProject.utils.DataResult;
 import Ilya.Project.GamesProject.utils.Result;
 
 public class UserRepository {
@@ -35,5 +37,9 @@ public class UserRepository {
 
     public static void register(User user, Result registerCallback) {
         UserAPI.register(user, registerCallback);
+    }
+
+    public static void getScore(String username, DataResult<UserScore> userScoreDataResult) {
+        UserAPI.getScore(username, userScoreDataResult);
     }
 }
