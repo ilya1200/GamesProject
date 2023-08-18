@@ -39,7 +39,7 @@ public class UserRepository {
         UserAPI.register(user, registerCallback);
     }
 
-    public static void getScore(User user, DataResult<UserScore> userScoreDataResult) {
-        UserAPI.getScore(user, userScoreDataResult);
+    public static void getScore(String username, DataResult<UserScore> userScoreDataResult) {
+        UserAPI.getScore(username, userScoreDataResult);
     }
 }

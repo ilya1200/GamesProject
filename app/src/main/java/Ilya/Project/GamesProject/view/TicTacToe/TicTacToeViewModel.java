@@ -16,6 +16,7 @@ import Ilya.Project.GamesProject.model.data.game.Game;
 import Ilya.Project.GamesProject.model.data.game.GameStatus;
 import Ilya.Project.GamesProject.model.data.game.Player;
 import Ilya.Project.GamesProject.model.data.user.User;
+import Ilya.Project.GamesProject.model.data.user.UserScore;
 import Ilya.Project.GamesProject.model.repository.GameItemRepository;
 import Ilya.Project.GamesProject.model.repository.GameRepository;
 import Ilya.Project.GamesProject.model.repository.UserRepository;
@@ -29,6 +30,13 @@ public class TicTacToeViewModel extends ViewModel {
     public MutableLiveData<Game> gameUpdatesLiveData = new MutableLiveData<>();
     public MutableLiveData<String> showErrorMessageToastLiveData = new MutableLiveData<>();
     private final long gameUpdatesIntervalMillis = Firebase.getGameUpdatesIntervalMillis();
+
+    public MutableLiveData<UserScore> firstUserScoreMutableLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<UserScore> secondUserScoreMutableLiveData = new MutableLiveData<>();
+
+    private boolean alreadyRequestedFirstUserScore = false;
+    private boolean alreadyRequestedSecondUserScore = false;
 
     public void getGameUpdates(UUID gameId) {
         GameRepository.getGameUpdates(gameId, new DataResult<Game>() {
@@ -137,5 +145,59 @@ public class TicTacToeViewModel extends ViewModel {
     public void stopPollingGameUpdates() {
         keepUpdatingFlag.set(false);
         gameUpdatesHandler.removeCallbacksAndMessages(null);
+    }
+
+    public void getUserScore(String username, boolean isFirstUser) {
+        UserRepository.getScore(username, new DataResult<UserScore>() {
+            @Override
+            public void onSuccess(UserScore data) {
+                if (isFirstUser) {
+                    firstUserScoreMutableLiveData.setValue(data);
+                    alreadyRequestedFirstUserScore = true;
+                } else {
+                    secondUserScoreMutableLiveData.setValue(data);
+                    alreadyRequestedSecondUserScore = true;
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+            }
+        });
+    }
+
+
+    public void handleUserScore(Game game) {
+        User user = UserRepository.getUser();
+        if (user == null) {
+            return;
+        }
+        String username = user.getUsername();
+
+        switch (game.getGameStatus()) {
+            case WAITING_TO_START:
+                if (!alreadyRequestedFirstUserScore) {
+                    getUserScore(username, true);
+                }
+                break;
+            case PLAYING:
+                if (!alreadyRequestedFirstUserScore) {
+                    getUserScore(game.getUserFirstName(), true);
+                }
+                if (!alreadyRequestedSecondUserScore) {
+                    getUserScore(game.getUserSecondName(), false);
+                }
+                break;
+            case PLAYER_1_WIN:
+            case PLAYER_2_WIN:
+                if (game.hasUserFirst()) {
+                    getUserScore(game.getUserFirstName(), true);
+                }
+                if (game.hasUserSecond()) {
+                    getUserScore(game.getUserSecondName(), false);
+                }
+                break;
+
+        }
     }
 }

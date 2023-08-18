@@ -70,14 +70,14 @@ public class UserAPI {
         });
     }
 
-    public static void getScore(User user, DataResult<UserScore> userScoreDataResult) {
-        if (user == null || user.getUsername() == null || user.getUsername().isEmpty()) {
+    public static void getScore(String username, DataResult<UserScore> userScoreDataResult) {
+        if (username == null || username.isEmpty()) {
             Timber.e("Failed to get user score, the user is null or empty");
             userScoreDataResult.onFailure(ContextProvider.getApplicationContext().getString(R.string.internal_error));
             return;
         }
 
-        Call<UserScore> callable = RetrofitInstance.getUserService().getScore(user.getUsername());
+        Call<UserScore> callable = RetrofitInstance.getUserService().getScore(username);
 
         callable.enqueue(new Callback<UserScore>() {
             @Override

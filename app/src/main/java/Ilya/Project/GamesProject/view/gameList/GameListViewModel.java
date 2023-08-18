@@ -84,8 +84,11 @@ public class GameListViewModel extends ViewModel {
 
     public void handleGetUserScore() {
         User user = UserRepository.getUser();
+        if (user == null) {
+            return;
+        }
 
-        UserRepository.getScore(user, new DataResult<UserScore>() {
+        UserRepository.getScore(user.getUsername(), new DataResult<UserScore>() {
             @Override
             public void onSuccess(UserScore data) {
                 userScoreMutableLiveData.setValue(data);

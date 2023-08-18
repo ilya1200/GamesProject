@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +16,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import Ilya.Project.GamesProject.R;
@@ -28,11 +30,15 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
     private final List<Button> buttons = new ArrayList<>();
     TicTacToeViewModel ticTacToeViewModel;
     private MaterialTextView firstUserTextView;
-    private MaterialTextView firstUserWins;
-    private MaterialTextView firstUserLosses;
+    private MaterialTextView firstUserWinsTextView;
+    private MaterialTextView firstUserLossesTextView;
+
+    private LinearLayout firstUserWinsAndLossesLinearLayout;
+
     private MaterialTextView secondUserTextView;
-    private MaterialTextView secondUserWins;
-    private MaterialTextView secondUserLosses;
+    private MaterialTextView secondUserWinsTextView;
+    private MaterialTextView secondUserLossesTextView;
+    private LinearLayout secondUserWinsAndLossesLinearLayout;
     private UUID gameId;
 
     @Override
@@ -61,11 +67,13 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe);
-        firstUserWins = findViewById(R.id.tic_tac_toe_first_user_score_wins);
-        firstUserLosses = findViewById(R.id.tic_tac_toe_first_user_score_losses);
+        firstUserWinsTextView = findViewById(R.id.tic_tac_toe_first_user_score_wins);
+        firstUserLossesTextView = findViewById(R.id.tic_tac_toe_first_user_score_losses);
+        firstUserWinsAndLossesLinearLayout = findViewById(R.id.first_user_wins_and_losses_ll);
 
-        secondUserWins = findViewById(R.id.tic_tac_toe_second_user_score_wins);
-        secondUserLosses = findViewById(R.id.tic_tac_toe_second_user_score_losses);
+        secondUserWinsTextView = findViewById(R.id.tic_tac_toe_second_user_score_wins);
+        secondUserLossesTextView = findViewById(R.id.tic_tac_toe_second_user_score_losses);
+        secondUserWinsAndLossesLinearLayout = findViewById(R.id.second_user_wins_and_losses_ll);
 
         ticTacToeViewModel = new ViewModelProvider(this).get(TicTacToeViewModel.class);
 
@@ -76,6 +84,19 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
         }
         gameId = UUID.fromString(getIntent().getStringExtra(Constants.GAME_ID_EXTRA));
         initLayout();
+
+        String userFirstWins = String.format(Locale.ENGLISH, getResources().getString(R.string.user_wins), 0);
+        String userFirstLosses = String.format(Locale.ENGLISH, getResources().getString(R.string.user_losses), 0);
+
+        firstUserWinsTextView.setText(userFirstWins);
+        firstUserLossesTextView.setText(userFirstLosses);
+
+        String userSecondWins = String.format(Locale.ENGLISH, getResources().getString(R.string.user_wins), 0);
+        String userSecondLosses = String.format(Locale.ENGLISH, getResources().getString(R.string.user_losses), 0);
+
+        secondUserWinsTextView.setText(userSecondWins);
+        secondUserLossesTextView.setText(userSecondLosses);
+
         initObservers();
     }
 
@@ -97,9 +118,33 @@ public class TicTacToeActivity extends AppCompatActivity implements View.OnClick
                 if (ticTacToeViewModel.isLegitGameFinish(gameStatus)) {
                     ticTacToeViewModel.updateBoard(game, buttons);
                 }
+
+                if (!game.hasUserFirst()) {
+                    firstUserTextView.setVisibility(View.INVISIBLE);
+                    firstUserWinsAndLossesLinearLayout.setVisibility(View.INVISIBLE);
+                }
+                if (!game.hasUserSecond()) {
+                    secondUserTextView.setVisibility(View.INVISIBLE);
+                    secondUserWinsAndLossesLinearLayout.setVisibility(View.INVISIBLE);
+                }
             } else {
                 ticTacToeViewModel.updateBoard(game, buttons);
             }
+            ticTacToeViewModel.handleUserScore(game);
+        });
+        ticTacToeViewModel.firstUserScoreMutableLiveData.observe(this, userScore -> {
+            String userFirstWins = String.format(Locale.ENGLISH, getResources().getString(R.string.user_wins), userScore.getWins());
+            String userFirstLosses = String.format(Locale.ENGLISH, getResources().getString(R.string.user_losses), userScore.getLosses());
+
+            firstUserWinsTextView.setText(userFirstWins);
+            firstUserLossesTextView.setText(userFirstLosses);
+        });
+        ticTacToeViewModel.secondUserScoreMutableLiveData.observe(this, userScore -> {
+            String userSecondWins = String.format(Locale.ENGLISH, getResources().getString(R.string.user_wins), userScore.getWins());
+            String userSecondLosses = String.format(Locale.ENGLISH, getResources().getString(R.string.user_losses), userScore.getLosses());
+
+            secondUserWinsTextView.setText(userSecondWins);
+            secondUserLossesTextView.setText(userSecondLosses);
         });
     }
 

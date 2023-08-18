@@ -104,7 +104,7 @@
             android:id="@+id/tic_tac_toe_second_user_score_losses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Losses: 0"
+            android:text="@string/user_losses"
             android:textAlignment="viewStart"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="12sp"
