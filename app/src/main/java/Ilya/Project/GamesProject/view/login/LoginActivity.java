@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout loginPasswordLayout;
     private Button loginBtn;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         TextInputEditText loginUsernameField = findViewById(R.id.loginUsername);
         TextInputEditText loginPasswordField = findViewById(R.id.loginPassword);
         MaterialTextView doNotHaveUser = findViewById(R.id.doNotHaveUser);
+        progressBar = findViewById(R.id.loginProgressBar);
         loginBtn = findViewById(R.id.loginBtn);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         initObservers();
@@ -110,6 +115,11 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel.shouldEnableLoginBtn.observe(this, shouldEnableLoginBtn -> {
             loginBtn.setEnabled(shouldEnableLoginBtn);
+        });
+
+
+        loginViewModel.shouldProgressBarBeVisible.observe(this, shouldProgressBarBeVisible -> {
+            progressBar.setVisibility(shouldProgressBarBeVisible ? View.VISIBLE : View.INVISIBLE);
         });
 
         loginViewModel.loginLiveData.observe(this, isLoggedInSuccess -> {
