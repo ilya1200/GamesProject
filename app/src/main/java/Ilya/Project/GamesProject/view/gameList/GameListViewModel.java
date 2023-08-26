@@ -43,6 +43,8 @@ public class GameListViewModel extends ViewModel {
             @Override
             public void onFailure(String message) {
                 joinGameSuccess.setValue(null);
+                showErrorMessageToastLiveData.setValue(message);
+                handleGetGameList();
             }
         });
     }
