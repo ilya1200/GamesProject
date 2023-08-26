@@ -43,4 +43,9 @@ public class Firebase {
         FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         return mFirebaseRemoteConfig.getLong(Constants.TIMEOUT_FOR_LOGIN_TO_COMPLETE_MILLIS);
     }
+
+    public static long getTimeoutForRegisterToCompleteMillis() {
+        FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        return mFirebaseRemoteConfig.getLong(Constants.TIMEOUT_FOR_REGISTER_TO_COMPLETE_MILLIS);
+    }
 }

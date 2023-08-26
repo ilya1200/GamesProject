@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout registerUsernameLayout;
     private TextInputLayout registerPasswordLayout;
     private Button registerBtn;
-
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText registerUsernameField = findViewById(R.id.registerUsername);
         TextInputEditText registerPasswordField = findViewById(R.id.registerPassword);
         MaterialTextView alreadyHaveUser = findViewById(R.id.alreadyHaveUserLink);
+        progressBar = findViewById(R.id.registerProgressBar);
         registerBtn = findViewById(R.id.registerBtn);
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         initObservers();
@@ -110,12 +113,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerViewModel.shouldEnableRegisterBtn.observe(this, shouldEnableRegisterBtn -> registerBtn.setEnabled(shouldEnableRegisterBtn));
 
+        registerViewModel.shouldProgressBarBeVisible.observe(this, shouldProgressBarBeVisible -> {
+            progressBar.setVisibility(shouldProgressBarBeVisible ? View.VISIBLE : View.INVISIBLE);
+        });
+
         registerViewModel.registerLiveData.observe(this, isLoggedInSuccess -> {
             if (isLoggedInSuccess) {
                 moveToActivity(new Intent(RegisterActivity.this, GameListActivity.class));
             }
         });
-        registerViewModel.showErrorMessageToastLiveData.observe(this, errorMessage-> Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show());
+        registerViewModel.showErrorMessageToastLiveData.observe(this, errorMessage -> Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show());
     }
 
     private void moveToActivity(Intent intent) {
